@@ -37,15 +37,18 @@
                     json.put("role", role);
                 } else {
                     json.put("status", false);
+                    json.put("error_msg", "Invalid Username or Password");
                 }
             } finally {
 
             }
         } catch (Exception e) {
             json.put("status", false);
+            json.put("error_msg", "Invalid Username or Password");
         }
     } else {
         json.put("status", false);
+        json.put("error_msg", "Not Authorized");
     }
     out.print(json);
 %>
