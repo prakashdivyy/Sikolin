@@ -1,4 +1,5 @@
 <%@page import="java.io.BufferedReader"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -20,32 +21,30 @@
             JSONObject jsonObject = (JSONObject) obj;
             String username = (String) jsonObject.get("username");
             String password = (String) jsonObject.get("password");
+            String role = (String) jsonObject.get("role");
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-                String query = "SELECT * FROM user WHERE username='" + username + "'";
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                resultSet.next();
-                String hash = (String) resultSet.getObject(3);
-                if (BCrypt.checkpw(password, hash)) {
-                    json.put("status", true);
-                    json.put("username", username);
-                    int credits = Integer.parseInt(resultSet.getObject(4).toString());
-                    int role = Integer.parseInt(resultSet.getObject(5).toString());
-                    json.put("credits", credits);
-                    json.put("role", role);
-                } else {
-                    json.put("status", false);
-                }
+                String hash_pass = BCrypt.hashpw(password, BCrypt.gensalt(12));
+                String query = "INSERT INTO user(username, password, role) values(?, ?, ?)";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, username);
+                ps.setString(2, hash_pass);
+                ps.setString(3, role);
+                ps.executeUpdate();
+                ps.close();
+                json.put("status", true);
+                json.put("message", "Thank you for register");
             } finally {
 
             }
         } catch (Exception e) {
             json.put("status", false);
+            json.put("message", "Username Exist");
         }
     } else {
         json.put("status", false);
+        json.put("message", "Not Authorized");
     }
     out.print(json);
 %>
