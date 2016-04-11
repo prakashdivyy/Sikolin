@@ -7,7 +7,7 @@
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%
     JSONObject json = new JSONObject();
-    if((request.getParameter("username")!= null) && (request.getParameter("password") != null)){
+    if ((request.getParameter("username") != null) && (request.getParameter("password") != null) && (request.getMethod().equalsIgnoreCase("POST"))) {
         String dbUsername = "root";
         String dbPassword = "root";
         String dbUrl = "jdbc:mysql://localhost/sikolin";
@@ -16,21 +16,20 @@
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-            String query = "SELECT password FROM user WHERE username='" + username +"'";
+            String query = "SELECT password FROM user WHERE username='" + username + "'";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
             String hash = (String) resultSet.getObject(1);
-            if (BCrypt.checkpw(password, hash)){
+            if (BCrypt.checkpw(password, hash)) {
                 json.put("auth", 1);
-            } else{
+            } else {
                 json.put("auth", 0);
             }
-        } finally{
-            
+        } catch (Exception e) {
+            json.put("auth", 0);
         }
-        
-    } else{
+    } else {
         json.put("auth", 0);
     }
     out.print(json);
