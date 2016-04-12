@@ -5,6 +5,7 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.mindrot.jbcrypt.BCrypt"%>
+<%@page session="true"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,13 +59,15 @@
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-                    String query = "SELECT password FROM user WHERE username='" + username + "'";
+                    String query = "SELECT id, password FROM user WHERE username='" + username + "'";
                     Statement statement = connection.createStatement();
                     ResultSet resultSet = statement.executeQuery(query);
                     resultSet.next();
-                    String hash = (String) resultSet.getObject(1);
+                    String hash = (String) resultSet.getObject(2);
                     if (BCrypt.checkpw(password, hash)) {
-                        response.sendRedirect("index.jsp");
+                        int user_id = Integer.parseInt(resultSet.getObject(1).toString());
+                        session.setAttribute("user_id", user_id);
+                        response.sendRedirect("home.jsp");
                     } else {
         %>
         <script>

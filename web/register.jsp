@@ -5,7 +5,10 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="org.json.simple.JSONObject"%>
-<%@page import="org.mindrot.jbcrypt.BCrypt"%>
+<%@page import="org.mindrot.jbcrypt.BCrypt"%><%@page session="true"%>
+<%
+    if (session.getAttribute("user_id") == null) {
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -98,3 +101,8 @@
         %>
     </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("home.jsp");
+    }
+%>
