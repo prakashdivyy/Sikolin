@@ -5,7 +5,8 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="org.json.simple.JSONObject"%>
-<%@page import="org.mindrot.jbcrypt.BCrypt"%><%@page session="true"%>
+<%@page import="org.mindrot.jbcrypt.BCrypt"%>
+<%@page session="true"%>
 <%
     if (session.getAttribute("user_id") == null) {
 %>
@@ -53,7 +54,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s8 offset-s2 center-align">
-                                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                                    <button class="btn waves-effect yellow darken-4" type="submit" name="action">Submit</button>
                                 </div>
                             </div>
                         </form>

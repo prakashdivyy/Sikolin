@@ -6,6 +6,9 @@
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.mindrot.jbcrypt.BCrypt"%>
 <%@page session="true"%>
+<%
+    if (session.getAttribute("user_id") == null) {
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,7 +42,8 @@
                             </div>
                             <div class="row">
                                 <div class="col s8 offset-s2 center-align">
-                                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                                    <a class="btn waves-effect red darken-4" href="register.jsp">Register</a>
+                                    <button class="btn waves-effect yellow darken-4" type="submit" name="action">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -90,3 +94,8 @@
         %>
     </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("home.jsp");
+    }
+%>

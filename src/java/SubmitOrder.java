@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,16 +40,16 @@ public class SubmitOrder extends HttpServlet {
             int count = Integer.parseInt(request.getParameter("itemCount"));
             Class.forName("com.mysql.jdbc.Driver");
             String userName = "root";
-            String password = "";
+            String password = "root";
             String url = "jdbc:mysql://localhost/sikolin";
             Connection connection = DriverManager.getConnection(url, userName, password);
-            Statement statement = connection.createStatement();  
-            
+            Statement statement = connection.createStatement();
+
             String query = "INSERT INTO form  values (0, 1, NOW())";
             statement.addBatch(query);
 //            statement.executeUpdate(query);
-            for(int i = 0; i < count; i++){
-                String tempQuery = "INSERT INTO pesanan  values (0,1,1,1,1,1)"; 
+            for (int i = 0; i < count; i++) {
+                String tempQuery = "INSERT INTO pesanan  values (0,1,1,1,1,1)";
                 statement.addBatch(tempQuery);
             }
             statement.executeBatch();
