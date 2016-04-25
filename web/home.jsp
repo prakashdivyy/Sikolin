@@ -1,6 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
+<%@page session="true"%>
+<%
+    if (session.getAttribute("user_id") != null) {
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +17,7 @@
         <link type="text/css" rel="stylesheet" href="assets/css/animate.css"  media="screen,projection"/>
 
         <link type="text/css" rel="stylesheet" href="assets/css/style.css"/>
-        <title>Homepage</title> 
+        <title>Homepage</title>
     </head>
     <body class="light-blue lighten-5">
         <!--Import jQuery before materialize.js-->
@@ -36,17 +40,17 @@
                 updateTotal();
                 $('select').material_select();
             }
-            
-            function increaseCount(){
+
+            function increaseCount() {
                 count++;
                 document.getElementById("itemCount").value = count;
-                
-                
+
+
             }
-            function decreaseCount(){
+            function decreaseCount() {
                 count--;
                 document.getElementById("itemCount").value = count;
-                
+
             }
             function eraseCart(id, price) {
                 $('#order' + id).remove()
@@ -56,7 +60,7 @@
             }
             function updateTotal() {
                 $("#totalHarga").html("Total : Rp. " + total);
-                
+
             }
             $("[id^=jumlah]").change(function () {
                 $(this).val();
@@ -82,7 +86,7 @@
             </div>
         </nav>
         <div class="row">
-            <div class="col s9 amber lighten-4 columns">     
+            <div class="col s9 amber lighten-4 columns">
                 <h3> Daftar Menu Kantin Fasilkom </h3>
                 <div class="row">
                     <div class="col s12">
@@ -213,9 +217,9 @@
             <div class="col s3 teal lighten-5 columns">
                 <form action="SubmitOrder">
                     <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
-                    
+
                     <div id="shopcart" style="overflow-y: scroll; height:65vh;">
-                        
+
 
                     </div>
                     <div id="totalHarga">Total : Rp. 0</div>
@@ -225,3 +229,8 @@
         </div>
     </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("login.jsp");
+    }
+%>

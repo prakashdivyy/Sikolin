@@ -1,9 +1,3 @@
-<%-- 
-    Document   : statuspesanan
-    Created on : Apr 25, 2016, 2:06:06 PM
-    Author     : Kevin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -39,6 +33,6 @@
                 </ul>
             </div>
         </nav>
-        
+
     </body>
 </html>
