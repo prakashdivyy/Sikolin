@@ -32,18 +32,31 @@
             function addToCart(id, name, price) {
                 $("#shopcart").append("<div id='order" + count + "' class='card animated bounceInUp'><div class='card-content black-text'><input type='text' value='" + name + "' disabled/><div class='row'><div class='input-field'><select id='jumlah" + count + "'><option value='1' selected>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select></div></div></div><div class='card-action'><a class='right-align' href='#' onclick='eraseCart(" + count + ", " + price + ")'>Remove</a></div></div>");
                 total += parseInt(price, 10);
-                count++;
+                increaseCount();
                 updateTotal();
                 $('select').material_select();
             }
-
+            
+            function increaseCount(){
+                count++;
+                document.getElementById("itemCount").value = count;
+                
+                
+            }
+            function decreaseCount(){
+                count--;
+                document.getElementById("itemCount").value = count;
+                
+            }
             function eraseCart(id, price) {
                 $('#order' + id).remove()
                 total -= parseInt(price, 10);
+                decreaseCount();
                 updateTotal();
             }
             function updateTotal() {
                 $("#totalHarga").html("Total : Rp. " + total);
+                
             }
             $("[id^=jumlah]").change(function () {
                 $(this).val();
@@ -69,7 +82,8 @@
             </div>
         </nav>
         <div class="row">
-            <div class="col s9 amber lighten-4 columns">               
+            <div class="col s9 amber lighten-4 columns">     
+                <h3> Daftar Menu Kantin Fasilkom </h3>
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs">
@@ -197,8 +211,11 @@
             </div>
 
             <div class="col s3 teal lighten-5 columns">
-                <form action="PurchaseItem">
+                <form action="SubmitOrder">
+                    <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
+                    
                     <div id="shopcart" style="overflow-y: scroll; height:65vh;">
+                        
 
                     </div>
                     <div id="totalHarga">Total : Rp. 0</div>
