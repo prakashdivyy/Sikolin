@@ -76,8 +76,8 @@
             });
         </script>
         <%
-                }
-            } catch (Exception e) {
+            }
+        } catch (Exception e) {
         %>
         <script>
             $(document).ready(function () {
