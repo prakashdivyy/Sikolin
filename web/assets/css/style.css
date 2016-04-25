@@ -1,0 +1,39 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 6, 2016, 2:31:25 PM
+    Author     : Kevin
+*/
+nav {
+    height: 90px;
+    line-height: 90px;
+}
+
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+    height: 90px;
+    line-height: 90px;
+}
+
+nav .button-collapse i {
+    height: 90px;
+    line-height: 90px;
+}
+
+nav .brand-logo { 
+    font-size: 1.6rem; 
+    top: 12.5%;
+}
+
+@media only screen and (min-width: 601px){
+    nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+        height: 90px;
+        line-height: 90px;
+    }
+}
+
+.columns{
+    height: 100vh;
+}
