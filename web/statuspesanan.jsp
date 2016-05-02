@@ -1,17 +1,31 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSetMetaData"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%
+    if ((session.getAttribute("user_id") != null) && (session.getAttribute("role") != null)) {
+%>
 <!DOCTYPE html>
 <html>
     <head>
+        <!--        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                Import Google Icon Font
+                <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+                Import materialize.css
+                <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
+                <link type="text/css" rel="stylesheet" href="assets/css/animate.css"  media="screen,projection"/>
+        
+                <link type="text/css" rel="stylesheet" href="assets/css/style.css"/>
+                <title>Cek status</title> -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-        <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
-        <link type="text/css" rel="stylesheet" href="assets/css/animate.css"  media="screen,projection"/>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+        <link type="text/css" rel="stylesheet" href="assets/css/animate.css" media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="assets/css/style.css"/>
-        <title>Cek status</title> 
+        <title>Sikolin Cek Pesanan</title>
     </head>
     <body class="light-blue lighten-5">
         <!--Import jQuery before materialize.js-->
@@ -39,5 +53,62 @@
                 </ul>
             </div>
         </nav>
+        <script>
+            $(document).ready(function () {
+                worker();
+            });
+            (function worker() {
+                $.ajax({
+                    url: 'ajax/test.html',
+                    success: function (data) {
+                        $('.result').html(data);
+                    },
+                    complete: function () {
+                        // Schedule the next request when the current one's complete
+                        setTimeout(worker, 5000);
+                    }
+                });
+            })();
+        </script>
+
+        <%
+            String userid = "" + session.getAttribute("user_id");
+            String query = "SELECT * FROM pesanan as P, form as F WHERE F.id_user = '" + userid + "' AND F.id = P.id_form";
+            Class.forName("com.mysql.jdbc.Driver");
+            String userName = "root";
+            String password = "root";
+            String url = "jdbc:mysql://localhost/sikolin";
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            out.print("<table class='table'");
+            out.print("<tr>");
+            for (int i = 1; i <= 6; i++) {
+                out.print("<th>");
+                out.print(metaData.getColumnName(i));
+                out.print("</th>");
+            }
+            out.print("</tr>");
+            int count = 1;
+            while (resultSet.next()) {
+                out.print("<tr>");
+                out.print("<td>" + resultSet.getObject(1) + "</td>");
+                out.print("<td>" + resultSet.getObject(2) + "</td>");
+                out.print("<td>" + resultSet.getObject(3) + "</td> ");
+                out.print("<td>" + resultSet.getObject(4) + "</td> ");
+                out.print("<td>" + resultSet.getObject(5) + "</td>");
+                out.print("<td>" + resultSet.getObject(6) + "</td>");
+                out.print("</tr>");
+                count++;
+            }
+            out.print("</table>");
+        %>
     </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("login.jsp");
+    }
+%>

@@ -170,6 +170,7 @@
             <div class="col s3 teal lighten-5">
                 <form action="SubmitOrder">
                     <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
+                    <input type="hidden" name="userid" value="<%= session.getAttribute("user_id") %>"> 
                     <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
                     <div id="totalHarga">Total : Rp. 0</div>
                     <input type="submit">

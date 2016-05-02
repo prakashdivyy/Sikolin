@@ -8,7 +8,7 @@ var count = 0;
 var total = 0;
 
 function addToCart(id, name, price) {
-    $("#shopcart").append("<div id='order" + count + "' class='card animated bounceInUp'><div class='card-content black-text'><input type='text' value='" + name + "' disabled/><div class='row'><div class='input-field'><select id='jumlah" + count + "'><option value='1' selected>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select></div></div></div><div class='card-action'><a class='right-align' href='#' onclick='eraseCart(" + count + ", " + price + ")'>Remove</a></div></div>");
+    $("#shopcart").append("<div id='order" + count + "' class='card animated bounceInUp'><div class='card-content black-text'><label>"+name+"</label><input type='hidden' name='id"+count+"' value='"+id+"'><div class='row'><div class='input-field'><select name='jumlah" + count + "'><option value='1' selected>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select><input type='text' name='keterangan"+count+"' placeholder='Keterangan'></div></div></div><div class='card-action'><a class='right-align' href='#' onclick='eraseCart(" + count + ", " + price + ")'>Remove</a></div></div>");
     total += parseInt(price, 10);
     increaseCount();
     updateTotal();
