@@ -7,7 +7,7 @@
 <%@page import="org.mindrot.jbcrypt.BCrypt"%>
 <%@page session="true"%>
 <%
-    if (session.getAttribute("user_id") == null) {
+    if ((session.getAttribute("user_id") == null) && (session.getAttribute("role") == null)) {
 %>
 <!DOCTYPE html>
 <html>
@@ -66,15 +66,21 @@
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-                    String query = "SELECT id, password FROM user WHERE username='" + username + "'";
+                    String query = "SELECT id, password, role FROM user WHERE username='" + username + "'";
                     Statement statement = connection.createStatement();
                     ResultSet resultSet = statement.executeQuery(query);
                     resultSet.next();
                     String hash = (String) resultSet.getObject(2);
                     if (BCrypt.checkpw(password, hash)) {
                         int user_id = Integer.parseInt(resultSet.getObject(1).toString());
+                        int role = Integer.parseInt(resultSet.getObject(3).toString());
                         session.setAttribute("user_id", user_id);
-                        response.sendRedirect("home.jsp");
+                        session.setAttribute("role", role);
+                        if (role == 0) {
+                            response.sendRedirect("buyer.jsp");
+                        } else {
+                            response.sendRedirect("seller.jsp");
+                        }
                     } else {
         %>
         <script>
@@ -99,6 +105,12 @@
 </html>
 <%
     } else {
-        response.sendRedirect("home.jsp");
+        String tmp = session.getAttribute("role").toString();
+        int role = Integer.parseInt(tmp);
+        if (role == 0) {
+            response.sendRedirect("buyer.jsp");
+        } else {
+            response.sendRedirect("seller.jsp");
+        }
     }
 %>

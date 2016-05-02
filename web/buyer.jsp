@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true"%>
 <%
-    if (session.getAttribute("user_id") != null) {
+    if ((session.getAttribute("user_id") == null) && (session.getAttribute("role") == null)) {
 %>
 <!DOCTYPE html>
 <html>

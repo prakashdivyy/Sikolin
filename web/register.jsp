@@ -8,7 +8,7 @@
 <%@page import="org.mindrot.jbcrypt.BCrypt"%>
 <%@page session="true"%>
 <%
-    if (session.getAttribute("user_id") == null) {
+    if ((session.getAttribute("user_id") == null) && (session.getAttribute("role") == null)) {
 %>
 <!DOCTYPE html>
 <html>
@@ -104,6 +104,12 @@
 </html>
 <%
     } else {
-        response.sendRedirect("home.jsp");
+        String tmp = session.getAttribute("role").toString();
+        int role = Integer.parseInt(tmp);
+        if (role == 0) {
+            response.sendRedirect("buyer.jsp");
+        } else {
+            response.sendRedirect("seller.jsp");
+        }
     }
 %>
