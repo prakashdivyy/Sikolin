@@ -21,9 +21,12 @@
         <div class="container">
             <div class="row">
                 <div class="col s6 offset-s3">
+                    <br>
                     <div class="card-panel">
                         <div class="center-align row">
-                            <h3>Login</h3>
+                            <img src="assets/img/logosikolin.png" width="200">
+                            <br>
+                            <img src="assets/img/textsikolin.png" width="200">
                         </div>
                         <form class="row" method="POST" action="login.jsp">
                             <div class="row">

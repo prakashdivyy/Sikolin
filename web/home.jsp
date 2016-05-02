@@ -1,6 +1,9 @@
+<%@page import="java.sql.ResultSetMetaData"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
-<%@page import="java.util.*"%>
 <%@page session="true"%>
 <%
     if (session.getAttribute("user_id") != null) {
@@ -19,23 +22,27 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
         <script src="assets/js/homepage.js"></script>
-
         <ul id="dropdown1" class="dropdown-content">
             <li><a href="#!">one</a></li>
             <li><a href="#!">two</a></li>
             <li class="divider"></li>
             <li><a href="logout.jsp">Logout</a></li>
         </ul>
-
         <nav>
             <div class="nav-wrapper teal lighten-1 z-depth-2 ">
-                <a href="index.jsp" class="brand-logo"><img src="assets/logosikolin.png" height="64"/><img src="assets/textsikolin.png"  height="48"/> </a>
+                <a href="index.jsp" class="brand-logo">
+                    <img src="assets/img/logosikolin.png" height="64"/>
+                    <img src="assets/img/textsikolin.png"  height="48"/>
+                </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right">menu</i></a></li>
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropdown1">
+                            <i class="material-icons right">menu</i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
-
         <div class="row">
             <div class="col s9 amber lighten-4">
                 <div class="row">
@@ -169,8 +176,7 @@
                 </form>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
 <%
     } else {

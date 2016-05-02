@@ -26,13 +26,18 @@
         </ul>
         <nav>
             <div class="nav-wrapper teal lighten-1 z-depth-2 ">
-                <a href="index.jsp" class="brand-logo"><img src="assets/logosikolin.png" height="64"/><img src="assets/textsikolin.png"  height="48"/> </a>
+                <a href="index.jsp" class="brand-logo">
+                    <img src="assets/img/logosikolin.png" height="64"/>
+                    <img src="assets/img/textsikolin.png"  height="48"/>
+                </a>
                 <ul class="right hide-on-med-and-down">
-
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right">menu</i></a></li>
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropdown1">
+                            <i class="material-icons right">menu</i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
-
     </body>
 </html>
