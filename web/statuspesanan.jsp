@@ -53,23 +53,6 @@
                 </ul>
             </div>
         </nav>
-        <script>
-            $(document).ready(function () {
-                worker();
-            });
-            (function worker() {
-                $.ajax({
-                    url: 'ajax/test.html',
-                    success: function (data) {
-                        $('.result').html(data);
-                    },
-                    complete: function () {
-                        // Schedule the next request when the current one's complete
-                        setTimeout(worker, 5000);
-                    }
-                });
-            })();
-        </script>
 
         <%
             String userid = "" + session.getAttribute("user_id");
@@ -82,29 +65,39 @@
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             ResultSetMetaData metaData = resultSet.getMetaData();
-
-            out.print("<table class='table'");
-            out.print("<tr>");
-            for (int i = 1; i <= 6; i++) {
-                out.print("<th>");
-                out.print(metaData.getColumnName(i));
-                out.print("</th>");
-            }
-            out.print("</tr>");
-            int count = 1;
-            while (resultSet.next()) {
-                out.print("<tr>");
-                out.print("<td>" + resultSet.getObject(1) + "</td>");
-                out.print("<td>" + resultSet.getObject(2) + "</td>");
-                out.print("<td>" + resultSet.getObject(3) + "</td> ");
-                out.print("<td>" + resultSet.getObject(4) + "</td> ");
-                out.print("<td>" + resultSet.getObject(5) + "</td>");
-                out.print("<td>" + resultSet.getObject(6) + "</td>");
-                out.print("</tr>");
-                count++;
-            }
-            out.print("</table>");
         %>
+        <div class="row">
+            <div class="col s8 offset-s2">
+                <div class="card">
+                    <div class="card-content">
+                        <%
+                            out.print("<table class='table'");
+                            out.print("<tr>");
+                            for (int i = 1; i <= 6; i++) {
+                                out.print("<th>");
+                                out.print(metaData.getColumnName(i));
+                                out.print("</th>");
+                            }
+                            out.print("</tr>");
+                            int count = 1;
+                            while (resultSet.next()) {
+                                
+                                out.print("<tr>");
+                                out.print("<td>" + resultSet.getObject(1) + "</td>");
+                                out.print("<td>" + resultSet.getObject(2) + "</td>");
+                                out.print("<td>" + resultSet.getObject(3) + "</td> ");
+                                out.print("<td>" + resultSet.getObject(4) + "</td> ");
+                                out.print("<td>" + resultSet.getObject(5) + "</td>");
+                                out.print("<td>" + resultSet.getObject(6) + "</td>");
+                                out.print("</tr>");
+                                count++;
+                            }
+                            out.print("</table>");
+                        %>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
 <%
