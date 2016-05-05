@@ -4,8 +4,6 @@
         session.setAttribute("user_id", null);
         session.setAttribute("role", null);
         session.invalidate();
-        response.sendRedirect("login.jsp");
-    } else {
-        response.sendRedirect("login.jsp");
     }
+    response.sendRedirect("login.jsp");
 %>
