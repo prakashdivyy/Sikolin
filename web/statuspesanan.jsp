@@ -81,7 +81,7 @@
                             out.print("</tr>");
                             int count = 1;
                             while (resultSet.next()) {
-                                
+
                                 out.print("<tr>");
                                 out.print("<td>" + resultSet.getObject(1) + "</td>");
                                 out.print("<td>" + resultSet.getObject(2) + "</td>");

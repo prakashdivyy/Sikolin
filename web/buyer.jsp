@@ -80,10 +80,10 @@
                                 out.print("</div>");
                                 out.print("<div class='col s6'>");
                                 out.print("<h5>" + resultSet.getObject(2) + "</h5>");
-                                
+
                                 //Modal for each detail
-                                out.print("<a class='waves-effect waves-light btn modal-trigger' href='#modal"+resultSet.getObject(1)+"'>Detail</a>");
-                                out.print("<div id='modal"+resultSet.getObject(1)+"' class='modal'>");
+                                out.print("<a class='waves-effect waves-light btn modal-trigger' href='#modal" + resultSet.getObject(1) + "'>Detail</a>");
+                                out.print("<div id='modal" + resultSet.getObject(1) + "' class='modal'>");
                                 out.print("<div class='modal-content'>");
                                 out.print("<h4>Modal Header</h4>");
                                 out.print("<p>A bunch of text</p>");
