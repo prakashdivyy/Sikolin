@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true"%>
 <%
-    if ((session.getAttribute("user_id") != null) && (session.getAttribute("role") != null)) {
+    if ((session.getAttribute("user_id") != null) && (session.getAttribute("role") != null) && (session.getAttribute("role").toString().equals("0"))) {
 %>
 <!DOCTYPE html>
 <html>
@@ -57,7 +57,7 @@
                 </div>
                 <div id="makanan">
                     <div class="row">
-                        <%
+                        <%                            
                             String query = "SELECT * FROM menu WHERE jenis='0'";
                             Class.forName("com.mysql.jdbc.Driver");
                             String userName = "root";
@@ -69,7 +69,7 @@
 
                             // process to show table
                             ResultSetMetaData metaData = resultSet.getMetaData();
-
+                            
                             while (resultSet.next()) {
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
@@ -94,7 +94,7 @@
                 </div>
                 <div id="minuman">
                     <div class="row">
-                        <%
+                        <%    
                             query = "SELECT * FROM menu WHERE jenis='1'";
                             Class.forName("com.mysql.jdbc.Driver");
                             userName = "root";
@@ -106,7 +106,7 @@
 
                             // process to show table
                             metaData = resultSet.getMetaData();
-
+                            
                             while (resultSet.next()) {
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
@@ -131,7 +131,7 @@
                 </div>
                 <div id="snack">
                     <div class="row">
-                        <%
+                        <%    
                             query = "SELECT * FROM menu WHERE jenis='2'";
                             Class.forName("com.mysql.jdbc.Driver");
                             userName = "root";
@@ -143,7 +143,7 @@
 
                             // process to show table
                             metaData = resultSet.getMetaData();
-
+                            
                             while (resultSet.next()) {
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
