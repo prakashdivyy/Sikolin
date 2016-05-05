@@ -1,6 +1,5 @@
 package org.sikolin;
 
-
 public class HashKey {
 
     public static String getHash(String txt, String hashType) {
