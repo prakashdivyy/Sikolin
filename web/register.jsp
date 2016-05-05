@@ -64,11 +64,7 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('select').material_select();
-            });
-        </script>
+        <script src="assets/js/style.js"></script>
         <%
             if ((request.getParameter("username") != null) && (request.getParameter("password") != null) && (request.getParameter("role") != null) && (request.getMethod().equalsIgnoreCase("POST"))) {
                 String dbUsername = "root";
