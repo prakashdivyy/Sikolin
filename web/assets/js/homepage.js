@@ -18,24 +18,24 @@ function addToCart(id, name, price) {
 function increaseCount() {
     count++;
     document.getElementById("itemCount").value = count;
-
-
 }
+
 function decreaseCount() {
     count--;
     document.getElementById("itemCount").value = count;
-
 }
+
 function eraseCart(id, price) {
-    $('#order' + id).remove()
+    $('#order' + id).remove();
     total -= parseInt(price, 10);
     decreaseCount();
     updateTotal();
 }
+
 function updateTotal() {
     $("#totalHarga").html("Total : Rp. " + total);
-
 }
+
 $("[id^=jumlah]").change(function () {
     $(this).val();
-})
+});

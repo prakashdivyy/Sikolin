@@ -1,3 +1,5 @@
+<%@page import="org.sikolin.Util"%>
+<%@page import="java.sql.Blob"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
@@ -71,12 +73,16 @@
                             ResultSetMetaData metaData = resultSet.getMetaData();
 
                             while (resultSet.next()) {
+                                Blob image = resultSet.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
                                 out.print("<div class='card-content'>");
                                 out.print("<div class='row'>");
                                 out.print("<div class='col s3'>");
-                                out.print("<i class='material-icons'>filter_hdr</i> ");
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                out.print("<img src='" + img + "' width='75'>");
                                 out.print("</div>");
                                 out.print("<div class='col s9'>");
                                 out.println(resultSet.getObject(2));
@@ -108,12 +114,16 @@
                             metaData = resultSet.getMetaData();
 
                             while (resultSet.next()) {
+                                Blob image = resultSet.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
                                 out.print("<div class='card-content'>");
                                 out.print("<div class='row'>");
                                 out.print("<div class='col s3'>");
-                                out.print("<i class='material-icons'>filter_hdr</i> ");
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                out.print("<img src='" + img + "' width='75'>");
                                 out.print("</div>");
                                 out.print("<div class='col s9'>");
                                 out.println(resultSet.getObject(2));
@@ -145,12 +155,16 @@
                             metaData = resultSet.getMetaData();
 
                             while (resultSet.next()) {
+                                Blob image = resultSet.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
                                 out.print("<div class='card-content'>");
                                 out.print("<div class='row'>");
                                 out.print("<div class='col s3'>");
-                                out.print("<i class='material-icons'>filter_hdr</i> ");
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                out.print("<img src='" + img + "' width='75'>");
                                 out.print("</div>");
                                 out.print("<div class='col s9'>");
                                 out.println(resultSet.getObject(2));
@@ -169,7 +183,7 @@
             </div>
             <div class="col s3 teal lighten-5">
                 <form action="SubmitOrder">
-                    <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
+                    <input type="hidden" name="itemCount" id="itemCount" value="0">
                     <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
                     <div id="totalHarga">Total : Rp. 0</div>
                     <input type="submit">
