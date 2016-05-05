@@ -1,3 +1,5 @@
+<%@page import="org.sikolin.Util"%>
+<%@page import="java.sql.Blob"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -5,7 +7,6 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.JSONArray"%>
-<%@page import="org.sikolin.HashKey"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%
     JSONObject json = new JSONObject();
@@ -24,7 +25,7 @@
             resultSet.next();
             int id = Integer.parseInt(resultSet.getObject(1).toString());
             int role = Integer.parseInt(resultSet.getObject(2).toString());
-            String compare = HashKey.md5(username + role + id);
+            String compare = Util.md5(username + role + id);
             if (compare.equals(authkey)) {
                 json.put("status", true);
                 JSONArray listMakanan = new JSONArray();
@@ -37,7 +38,9 @@
                     String nama_menu = resultSetMenu.getObject(2).toString();
                     int jenis_menu = Integer.parseInt(resultSetMenu.getObject(3).toString());
                     int harga_menu = Integer.parseInt(resultSetMenu.getObject(4).toString());
-                    String foto_menu = resultSetMenu.getObject(5).toString();
+                    Blob image = resultSetMenu.getBlob("foto");
+                    byte[] imgData = image.getBytes(1, (int) image.length());
+                    String foto_menu = Util.encode(imgData);
                     int id_seller = Integer.parseInt(resultSetMenu.getObject(6).toString());
                     Statement statementPenjual = connection.createStatement();
                     String queryPenjual = "SELECT username FROM user WHERE id='" + id_seller + "'";

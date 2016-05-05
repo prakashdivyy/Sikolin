@@ -1,6 +1,28 @@
 package org.sikolin;
 
-public class Base64 {
+public class Util {
+
+    public static String getHash(String txt, String hashType) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
+            byte[] array = md.digest(txt.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
+    }
+
+    public static String md5(String txt) {
+        return Util.getHash(txt, "MD5");
+    }
+
+    public static String sha1(String txt) {
+        return Util.getHash(txt, "SHA1");
+    }
 
     private final static char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
     private static int[] toInt = new int[128];
@@ -36,34 +58,5 @@ public class Base64 {
         }
 
         return new String(ar);
-    }
-
-    public static byte[] decode(String s) {
-        int delta = s.endsWith("==") ? 2 : s.endsWith("=") ? 1 : 0;
-        byte[] buffer = new byte[s.length() * 3 / 4 - delta];
-        int mask = 0xFF;
-        int index = 0;
-
-        for (int i = 0; i < s.length(); i += 4) {
-            int c0 = toInt[s.charAt(i)];
-            int c1 = toInt[s.charAt(i + 1)];
-            buffer[index++] = (byte) (((c0 << 2) | (c1 >> 4)) & mask);
-
-            if (index >= buffer.length) {
-                return buffer;
-            }
-
-            int c2 = toInt[s.charAt(i + 2)];
-            buffer[index++] = (byte) (((c1 << 4) | (c2 >> 2)) & mask);
-
-            if (index >= buffer.length) {
-                return buffer;
-            }
-
-            int c3 = toInt[s.charAt(i + 3)];
-            buffer[index++] = (byte) (((c2 << 6) | c3) & mask);
-        }
-
-        return buffer;
     }
 }

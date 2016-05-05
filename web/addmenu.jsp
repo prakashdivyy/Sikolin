@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.io.FileInputStream"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
@@ -76,7 +77,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
         <script src="assets/js/style.js"></script>
-        <%            
+        <%
             if (request.getMethod().equalsIgnoreCase("POST")) {
                 File file;
                 int maxFileSize = 5000 * 1024;
@@ -97,7 +98,7 @@
                         int price = 0;
                         int foodtype = 0;
                         int id_seller = Integer.parseInt(session.getAttribute("role").toString());
-                        String photo = "";
+                        FileInputStream photo = null;
                         String dir_foto = "";
                         List fileItems = upload.parseRequest(request);
                         Iterator i = fileItems.iterator();
@@ -107,13 +108,13 @@
                                 String fileName = fi.getName();
                                 String[] tmp = fileName.split("\\.");
                                 String ext = tmp[tmp.length - 1];
-                                if (ext.equalsIgnoreCase("jpeg") || ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png")) {
+                                if (ext.equalsIgnoreCase("jpeg") || ext.equalsIgnoreCase("jpg")) {
                                     Date date = new Date();
                                     long milsec = date.getTime();
                                     dir_foto = filePath + "_sikolin_" + milsec + "_" + fileName;
                                     file = new File(dir_foto);
                                     fi.write(file);
-                                    photo = dir_foto;
+                                    photo = new FileInputStream(file);
                                 } else {
                                     throw new Exception("File Not Supported");
                                 }
@@ -136,7 +137,7 @@
                         ps.setString(1, name);
                         ps.setInt(2, foodtype);
                         ps.setInt(3, price);
-                        ps.setString(4, photo);
+                        ps.setBlob(4, photo);
                         ps.setInt(5, id_seller);
                         ps.executeUpdate();
                         ps.close();
