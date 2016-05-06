@@ -26,10 +26,17 @@ public class SubmitOrder extends HttpServlet {
             String url = "jdbc:mysql://localhost/sikolin";
             Connection connection = DriverManager.getConnection(url, userName, password);
             Statement statement = connection.createStatement();
-            String query = "INSERT INTO form  values (0, 1, NOW())";
+            ResultSet result = statement.executeQuery("SELECT * from form");
+            result.last();
+            int new_id = Integer.parseInt(result.getString(1)) + 1;
+            int userid = Integer.parseInt(request.getParameter("userid"));
+            String query = "INSERT INTO form  values (" + new_id + "," + userid + ", NOW())";
             statement.addBatch(query);
             for (int i = 0; i < count; i++) {
-                String tempQuery = "INSERT INTO pesanan  values (0,1,1,1,1,1)";
+                int temp_id = Integer.parseInt(request.getParameter("id" + i));
+                int temp_count = Integer.parseInt(request.getParameter("jumlah" + i));
+                String temp_keterangan = request.getParameter("keterangan" + i);
+                String tempQuery = "INSERT INTO pesanan  values (0," + temp_id + "," + new_id + "," + temp_count + ",'" + temp_keterangan + "',0)";
                 statement.addBatch(tempQuery);
             }
             statement.executeBatch();

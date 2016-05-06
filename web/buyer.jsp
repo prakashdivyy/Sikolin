@@ -46,7 +46,7 @@
             </div>
         </nav>
         <div class="row">
-            <div class="col s9 amber lighten-4">
+            <div class="col s8 amber lighten-5">
                 <div class="row">
                     <h3> Daftar Menu Kantin Fasilkom </h3>
                     <div class="col s12">
@@ -77,7 +77,7 @@
                                 byte[] imgData = image.getBytes(1, (int) image.length());
                                 String foto_menu = Util.encode(imgData);
                                 out.print("<div class='col s6'>");
-                                out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
+                                out.print("<div class='card'>");
                                 out.print("<div class='card-content'>");
                                 out.print("<div class='row'>");
                                 out.print("<div class='col s3'>");
@@ -93,8 +93,8 @@
                                 out.print("</div>");
                                 out.print("</div>");
                             }
-                            connection.close();
-                            statement.close();
+//                            connection.close();
+//                            statement.close();
                         %>
                     </div>
                 </div>
@@ -102,12 +102,6 @@
                     <div class="row">
                         <%
                             query = "SELECT * FROM menu WHERE jenis='1'";
-                            Class.forName("com.mysql.jdbc.Driver");
-                            userName = "root";
-                            password = "root";
-                            url = "jdbc:mysql://localhost/sikolin";
-                            connection = DriverManager.getConnection(url, userName, password);
-                            statement = connection.createStatement();
                             resultSet = statement.executeQuery(query);
 
                             // process to show table
@@ -134,8 +128,8 @@
                                 out.print("</div>");
                                 out.print("</div>");
                             }
-                            connection.close();
-                            statement.close();
+//                            connection.close();
+//                            statement.close();
                         %>
                     </div>
                 </div>
@@ -143,12 +137,6 @@
                     <div class="row">
                         <%
                             query = "SELECT * FROM menu WHERE jenis='2'";
-                            Class.forName("com.mysql.jdbc.Driver");
-                            userName = "root";
-                            password = "root";
-                            url = "jdbc:mysql://localhost/sikolin";
-                            connection = DriverManager.getConnection(url, userName, password);
-                            statement = connection.createStatement();
                             resultSet = statement.executeQuery(query);
 
                             // process to show table
@@ -181,11 +169,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col s3 teal lighten-5">
+            <div class="col s3  amber lighten-5">
                 <form action="SubmitOrder">
-                    <input type="hidden" name="itemCount" id="itemCount" value="0">
                     <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
                     <div id="totalHarga">Total : Rp. 0</div>
+                    <input type="hidden" name="itemCount" id="itemCount" value="0">
+                    <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
                     <input type="submit">
                 </form>
             </div>
