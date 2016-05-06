@@ -3,8 +3,8 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="org.json.simple.JSONObject"%>
-<%@page import="org.json.simple.parser.JSONParser"%>
 <%@page import="org.mindrot.jbcrypt.BCrypt"%>
+<%@page import="org.sikolin.Util"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%
     JSONObject json = new JSONObject();
@@ -27,8 +27,11 @@
                 json.put("username", username);
                 int credits = Integer.parseInt(resultSet.getObject(4).toString());
                 int role = Integer.parseInt(resultSet.getObject(5).toString());
+                int id = Integer.parseInt(resultSet.getObject(1).toString());
+                String authkey = Util.md5(username + role + id);
                 json.put("credits", credits);
                 json.put("role", role);
+                json.put("authkey", authkey);
             } else {
                 json.put("status", false);
                 json.put("error_msg", "Invalid Username or Password");

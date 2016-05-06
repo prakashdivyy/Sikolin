@@ -1,3 +1,5 @@
+-- Adminer 4.2.4 MySQL dump
+
 SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
@@ -6,6 +8,18 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 DROP DATABASE IF EXISTS `sikolin`;
 CREATE DATABASE `sikolin` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `sikolin`;
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `credits` int(10) NOT NULL DEFAULT '0',
+  `role` int(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 DROP TABLE IF EXISTS `form`;
 CREATE TABLE `form` (
@@ -24,7 +38,7 @@ CREATE TABLE `menu` (
   `nama` varchar(50) NOT NULL,
   `jenis` int(1) NOT NULL,
   `harga` int(10) NOT NULL,
-  `foto` varchar(255) NOT NULL,
+  `foto` longblob NOT NULL,
   `id_seller` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_seller` (`id_seller`),
@@ -47,14 +61,4 @@ CREATE TABLE `pesanan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `credits` int(10) NOT NULL DEFAULT '0',
-  `role` int(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+-- 2016-05-05 10:26:06

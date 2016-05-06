@@ -105,8 +105,7 @@
 </html>
 <%
     } else {
-        String tmp = session.getAttribute("role").toString();
-        int role = Integer.parseInt(tmp);
+        int role = Integer.parseInt(session.getAttribute("role").toString());
         if (role == 0) {
             response.sendRedirect("buyer.jsp");
         } else {

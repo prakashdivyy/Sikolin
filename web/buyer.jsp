@@ -1,3 +1,5 @@
+<%@page import="org.sikolin.Util"%>
+<%@page import="java.sql.Blob"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
@@ -6,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true"%>
 <%
-    if ((session.getAttribute("user_id") != null) && (session.getAttribute("role") != null)) {
+    if ((session.getAttribute("user_id") != null) && (session.getAttribute("role") != null) && (session.getAttribute("role").toString().equals("0"))) {
 %>
 <!DOCTYPE html>
 <html>
@@ -71,28 +73,20 @@
                             ResultSetMetaData metaData = resultSet.getMetaData();
 
                             while (resultSet.next()) {
+                                Blob image = resultSet.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card'>");
                                 out.print("<div class='card-content'>");
                                 out.print("<div class='row'>");
                                 out.print("<div class='col s3'>");
-                                out.print("<img src='assets/img/pizza.png' width='100px' height='100px'>");
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                out.print("<img src='" + img + "' width='125' height='125'>");
                                 out.print("</div>");
-                                out.print("<div class='col s6'>");
+                                out.print("<div class='col s8 offset-s1'>");
                                 out.print("<h5>" + resultSet.getObject(2) + "</h5>");
-
-                                //Modal for each detail
-                                out.print("<a class='waves-effect waves-light btn modal-trigger' href='#modal" + resultSet.getObject(1) + "'>Detail</a>");
-                                out.print("<div id='modal" + resultSet.getObject(1) + "' class='modal'>");
-                                out.print("<div class='modal-content'>");
-                                out.print("<h4>Modal Header</h4>");
-                                out.print("<p>A bunch of text</p>");
-                                out.print("</div>");
-                                out.print("<div class='modal-footer'>");
-                                out.print("<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>");
-                                out.print("</div></div><br/>");
-                                out.print("<button  class='waves-effect waves-light btn' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'> Order <i class='material-icons right'>send</i> </button>");
-                                out.print("<strong>Harga satuan: " + resultSet.getObject(4) + "</strong>");
+                                out.print("<h6>Harga satuan: " + resultSet.getObject(4) + "</h6>");
                                 out.print("</div>");
                                 out.print("</div>");
                                 out.print("</div>");
@@ -114,16 +108,20 @@
                             metaData = resultSet.getMetaData();
 
                             while (resultSet.next()) {
+                                Blob image = resultSet.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
                                 out.print("<div class='card-content'>");
                                 out.print("<div class='row'>");
                                 out.print("<div class='col s3'>");
-                                out.print("<img src='assets/img/pizza.png' width='100px' height='100px'>");
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                out.print("<img src='" + img + "' width='125' height='125'>");
                                 out.print("</div>");
-                                out.print("<div class='col s9'>");
-                                out.print("<h3>" + resultSet.getObject(2) + "</h3>");
-                                out.print("Harga satuan: " + resultSet.getObject(4));
+                                out.print("<div class='col s8 offset-s1'>");
+                                out.print("<h5>" + resultSet.getObject(2) + "</h5>");
+                                out.print("<h6>Harga satuan: " + resultSet.getObject(4) + "</h6>");
                                 out.print("</div>");
                                 out.print("</div>");
                                 out.print("</div>");
@@ -145,16 +143,20 @@
                             metaData = resultSet.getMetaData();
 
                             while (resultSet.next()) {
+                                Blob image = resultSet.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
                                 out.print("<div class='col s6'>");
                                 out.print("<div class='card' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'>");
                                 out.print("<div class='card-content'>");
                                 out.print("<div class='row'>");
                                 out.print("<div class='col s3'>");
-                                out.print("<img src='assets/img/pizza.png' width='100px' height='100px'>");
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                out.print("<img src='" + img + "' width='125' height='125'>");
                                 out.print("</div>");
-                                out.print("<div class='col s9'>");
-                                out.print("<h3>" + resultSet.getObject(2) + "</h3>");
-                                out.print("Harga satuan: " + resultSet.getObject(4));
+                                out.print("<div class='col s8 offset-s1'>");
+                                out.print("<h5>" + resultSet.getObject(2) + "</h5>");
+                                out.print("<h6>Harga satuan: " + resultSet.getObject(4) + "</h6>");
                                 out.print("</div>");
                                 out.print("</div>");
                                 out.print("</div>");
@@ -171,7 +173,7 @@
                 <form action="SubmitOrder">
                     <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
                     <div id="totalHarga">Total : Rp. 0</div>
-                    <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
+                    <input type="hidden" name="itemCount" id="itemCount" value="0">
                     <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
                     <input type="submit">
                 </form>
