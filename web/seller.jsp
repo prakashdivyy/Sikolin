@@ -34,110 +34,130 @@
                 </ul>
             </div>
         </nav>
+        <%
+            String userid = session.getAttribute("user_id").toString();
+            String dbUsername = "root";
+            String dbPassword = "root";
+            String dbUrl = "jdbc:mysql://localhost/sikolin";
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+        %>
         <div class="row">
             <div class="col s12 amber lighten-4">
                 <div class="row">
-                    <h3> Daftar Menu Kantin Fasilkom </h3>
+                    <br>
                     <div class="col s12">
                         <ul class="tabs">
-                            <li class="tab col s6"><a class="active" href="#inprogress">In Progress</a></li>
-                            <li class="tab col s6"><a href="#completed">Completed</a></li>
+                            <li class="tab col s4"><a class="active" href="#neworder">New Order</a></li>
+                            <li class="tab col s4"><a href="#inprogress">In Progress</a></li>
+                            <li class="tab col s4"><a href="#completed">Completed</a></li>
                         </ul>
                     </div>
                 </div>
-                <div id="inprogress">
+                <div id="neworder">
+                    <%
+                        String query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=0";
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery(query);
+                        while (resultSet.next()) {
+                    %>
                     <div class="row">
                         <div class="col s12">
                             <div class="card">
                                 <div class="card-content">
                                     <div class="row">
                                         <div class='col s2'>
-                                            LALALA
+                                            <% out.print(resultSet.getString("nama")); %>
                                         </div>
                                         <div class='col s9 offset-s1'>
-                                            <h5>Nasi Padang</h5>
-                                            <h6>Quantity : 6</h6>
-                                            <p>JANGAN PEDES MAS!!!</p>
+                                            <h5><% out.print(resultSet.getString("nama")); %></h5>
+                                            <h6>Jumlah : <% out.print(resultSet.getInt("jumlah")); %></h6>
+                                            <h6>Id Pesanan : <% out.print(resultSet.getInt("id_form")); %></h6>
+                                            <h6>Pesan:</h6>
+                                            <% if (resultSet.getString("keterangan") != null) { %>
+                                            <p><% out.print(resultSet.getString("keterangan")); %></p>
+                                            <% } else { %>
+                                            <p>-</p>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <%
+                        }
+                    %>
+                </div>
+                <div id="inprogress">
+                    <%
+                        query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=1";
+                        Statement statement2 = connection.createStatement();
+                        ResultSet resultSet2 = statement2.executeQuery(query);
+                        while (resultSet2.next()) {
+                    %>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="row">
+                                        <div class='col s2'>
+                                            <% out.print(resultSet2.getString("nama")); %>
+                                        </div>
+                                        <div class='col s9 offset-s1'>
+                                            <h5><% out.print(resultSet2.getString("nama")); %></h5>
+                                            <h6>Jumlah : <% out.print(resultSet2.getInt("jumlah")); %></h6>
+                                            <h6>Id Pesanan : <% out.print(resultSet2.getInt("id_form")); %></h6>
+                                            <h6>Pesan:</h6>
+                                            <% if (resultSet2.getString("keterangan") != null) { %>
+                                            <p><% out.print(resultSet2.getString("keterangan")); %></p>
+                                            <% } else { %>
+                                            <p>-</p>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
                 </div>
                 <div id="completed">
+                    <%
+                        query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=2";
+                        Statement statement3 = connection.createStatement();
+                        ResultSet resultSet3 = statement3.executeQuery(query);
+                        while (resultSet3.next()) {
+                    %>
                     <div class="row">
                         <div class="col s12">
                             <div class="card">
                                 <div class="card-content">
                                     <div class="row">
                                         <div class='col s2'>
-                                            LALALA
+                                            <% out.print(resultSet3.getString("nama")); %>
                                         </div>
                                         <div class='col s9 offset-s1'>
-                                            <h5>Nasi Padang</h5>
-                                            <h6>Quantity : 6</h6>
-                                            <p>JANGAN PEDES MAS!!!</p>
+                                            <h5><% out.print(resultSet3.getString("nama")); %></h5>
+                                            <h6>Jumlah : <% out.print(resultSet3.getInt("jumlah")); %></h6>
+                                            <h6>Id Pesanan : <% out.print(resultSet3.getInt("id_form")); %></h6>
+                                            <h6>Pesan:</h6>
+                                            <% if (resultSet3.getString("keterangan") != null) { %>
+                                            <p><% out.print(resultSet3.getString("keterangan")); %></p>
+                                            <% } else { %>
+                                            <p>-</p>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="row">
-                                        <div class='col s2'>
-                                            LALALA
-                                        </div>
-                                        <div class='col s9 offset-s1'>
-                                            <h5>Nasi Padang</h5>
-                                            <h6>Quantity : 6</h6>
-                                            <p>JANGAN PEDES MAS!!!</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="row">
-                                        <div class='col s2'>
-                                            LALALA
-                                        </div>
-                                        <div class='col s9 offset-s1'>
-                                            <h5>Nasi Padang</h5>
-                                            <h6>Quantity : 6</h6>
-                                            <p>JANGAN PEDES MAS!!!</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="row">
-                                        <div class='col s2'>
-                                            LALALA
-                                        </div>
-                                        <div class='col s9 offset-s1'>
-                                            <h5>Nasi Padang</h5>
-                                            <h6>Quantity : 6</h6>
-                                            <p>JANGAN PEDES MAS!!!</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
         </div>
