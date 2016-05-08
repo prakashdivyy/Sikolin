@@ -1,5 +1,3 @@
--- Adminer 4.2.4 MySQL dump
-
 SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
@@ -20,6 +18,21 @@ CREATE TABLE `user` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(50) NOT NULL,
+  `jenis` int(1) NOT NULL,
+  `harga` int(10) NOT NULL,
+  `foto` longblob NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
+  `id_seller` int(10) NOT NULL,
+  `total_rating` float NOT NULL DEFAULT '0',
+  `jumlah_rate` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `id_seller` (`id_seller`),
+  CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_seller`) REFERENCES `user` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `form`;
 CREATE TABLE `form` (
@@ -30,21 +43,6 @@ CREATE TABLE `form` (
   KEY `id_user` (`id_user`),
   CONSTRAINT `form_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `menu`;
-CREATE TABLE `menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(50) NOT NULL,
-  `jenis` int(1) NOT NULL,
-  `harga` int(10) NOT NULL,
-  `foto` longblob NOT NULL,
-  `id_seller` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_seller` (`id_seller`),
-  CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_seller`) REFERENCES `user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 DROP TABLE IF EXISTS `pesanan`;
 CREATE TABLE `pesanan` (
@@ -59,6 +57,3 @@ CREATE TABLE `pesanan` (
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`),
   CONSTRAINT `order_ibfk_2` FOREIGN KEY (`id_form`) REFERENCES `form` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
--- 2016-05-05 10:26:06
