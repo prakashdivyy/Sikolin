@@ -39,11 +39,6 @@
                 </a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="logout.jsp">Logout</a></li>
-                    <!--                    <li>
-                                            <a class="dropdown-button" href="#!" data-activates="dropdown1">
-                                                <i class="material-icons right">menu</i>
-                                            </a>
-                                        </li>-->
                 </ul>
             </div>
         </nav>
@@ -56,9 +51,9 @@
                             <div class="col s12">
                                 <div class="indicator orange" style="z-index:1">
                                     <ul class="tabs">
-                                        <li class="tab col s4"><a class="active" href="#makanan">Makanan</a></li>
-                                        <li class="tab col s4"><a href="#minuman">Minuman</a></li>
-                                        <li class="tab col s4"><a href="#snack">Snack</a></li>
+                                        <li class="tab col s4"><a class="active" href="#makanan" style="color: #00c5c8;">Makanan</a></li>
+                                        <li class="tab col s4"><a href="#minuman"style="color: #00c5c8;">Minuman</a></li>
+                                        <li class="tab col s4"><a href="#snack" style="color: #00c5c8;">Snack</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -66,7 +61,7 @@
                         <div id="makanan">
                             <div class="row">
                                 <%
-                                    String query = "SELECT * FROM menu WHERE jenis='0'";
+                                    String query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM MENU INNER JOIN USER ON menu.id_seller = user.id WHERE jenis='0'";
                                     Class.forName("com.mysql.jdbc.Driver");
                                     String userName = "root";
                                     String password = "root";
@@ -106,11 +101,11 @@
                                         out.print("</div>");
                                         out.print("<div class='col s8 offset-s1'>");
                                         out.print("<h4> " + resultSet.getObject(2) + " </h4>");
-                                        out.print("<h5> Penjual: " + resultSet.getObject(6) + " </h5>");
+                                        out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
                                         out.print("<h5> Rating: 9.8/10 </h5>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p> ");
+                                        out.print("<p> "+resultSet.getObject(6)+" </p> ");
 
                                         out.print("</div>");
                                         out.print("<div class='modal-footer'>");
@@ -135,7 +130,7 @@
                         <div id="minuman">
                             <div class="row">
                                 <%                                    
-                                    query = "SELECT * FROM menu WHERE jenis='1'";
+                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM MENU INNER JOIN USER ON menu.id_seller = user.id  WHERE jenis='1'";
                                     resultSet = statement.executeQuery(query);
 
                                     // process to show table
@@ -169,11 +164,11 @@
                                         out.print("</div>");
                                         out.print("<div class='col s8 offset-s1'>");
                                         out.print("<h4> " + resultSet.getObject(2) + " </h4>");
-                                        out.print("<h5> Penjual: " + resultSet.getObject(6) + " </h5>");
+                                        out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
                                         out.print("<h5> Rating: 9.8/10 </h5>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p> ");
+                                        out.print("<p> "+resultSet.getObject(6)+" </p> ");
 
                                         out.print("</div>");
                                         out.print("<div class='modal-footer'>");
@@ -198,7 +193,7 @@
                         <div id="snack">
                             <div class="row">
                                 <%
-                                    query = "SELECT * FROM menu WHERE jenis='2'";
+                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM MENU INNER JOIN USER ON menu.id_seller = user.id  WHERE jenis='2'";
                                     resultSet = statement.executeQuery(query);
 
                                     // process to show table
@@ -232,11 +227,11 @@
                                         out.print("</div>");
                                         out.print("<div class='col s8 offset-s1'>");
                                         out.print("<h4> " + resultSet.getObject(2) + " </h4>");
-                                        out.print("<h5> Penjual: " + resultSet.getObject(6) + " </h5>");
+                                        out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
                                         out.print("<h5> Rating: 9.8/10 </h5>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p> ");
+                                        out.print("<p> "+resultSet.getObject(6)+" </p> ");
 
                                         out.print("</div>");
                                         out.print("<div class='modal-footer'>");
