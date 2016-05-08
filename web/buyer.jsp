@@ -217,14 +217,26 @@
                         <form action="SubmitOrder">
 
                             <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
-
-                            <div id="userCredit" data-value="<%= credit %>">Credit  : Rp. <%= credit %> </div>
-                            <div id="totalHarga" data-value="0">Total   : Rp. 0</div>
-                            <hr>
-                            <div id="sisaCredit" data-value="<%= credit %>">Sisa    : Rp. <%= credit %> </div>
-                            <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
-                            <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
-                            <input type="submit">
+                            <div class="pull-right">
+                                <table>
+                                    <tr>
+                                        <td> Credit  : </td>
+                                        <td> <div id="userCredit" data-value="<%= credit%>"> Rp. <%= credit%> </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total </td>
+                                        <td><div id="totalHarga" data-value="0">Rp. 0</div> </td>
+                                    </tr>
+                                    <hr>
+                                    <tr>
+                                        <td>Sisa :</td>
+                                        <td><input id="sisacredit" name="sisacredit" type="text" value="<%= credit%>" style='pointer-events: none;'></td>
+                                    </tr>
+                                </table>
+                                <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
+                                <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
+                                <input id="submitOrder" type="submit">
+                            </div>
                         </form>
                     </div>
                 </div>

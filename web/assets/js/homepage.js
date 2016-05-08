@@ -28,8 +28,12 @@ function calculateRemainder(){
     var credit = document.getElementById('userCredit').getAttribute('data-value');
     var total = document.getElementById('totalHarga').getAttribute('data-value');
     var remainder = credit - total;
-    $("#sisaCredit").attr("data-value", remainder);
-    $("#sisaCredit").html("Sisa : Rp. " + remainder);
+    if (remainder < 0) {
+        $("#submitOrder").addClass("disabledbutton");
+    } else {
+        $("#submitOrder").addClass("enabledbutton");
+    }
+    document.getElementById("sisacredit").value = remainder;
 }
 function changeQuantity(id, sel) {
     var quantity = sel.value;
