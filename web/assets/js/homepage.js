@@ -19,11 +19,18 @@ function calculateTotal() {
     var total = 0;
     for (var i = 0; i < items.length; i++) {
         total = total + (items[i].itemQty * items[i].itemPrc);
-//          total = 2 * 5;
     }
+    $("#totalHarga").attr("data-value", total);
     $("#totalHarga").html("Total : Rp. " + total);
 }
 
+function calculateRemainder(){
+    var credit = document.getElementById('userCredit').getAttribute('data-value');
+    var total = document.getElementById('totalHarga').getAttribute('data-value');
+    var remainder = credit - total;
+    $("#sisaCredit").attr("data-value", remainder);
+    $("#sisaCredit").html("Sisa : Rp. " + remainder);
+}
 function changeQuantity(id, sel) {
     var quantity = sel.value;
     for (var i = 0; i < items.length; i++) {
@@ -32,20 +39,14 @@ function changeQuantity(id, sel) {
         }
     }
     calculateTotal();
+    calculateRemainder();
 }
 function removeItem(id) {
-//    for (var i = 0; i < items.length; i++) {
-//        if (items[i].itemID === id) {
-//            if (i !== -1) {
-//                items.splice(i, 1);
-//                break;
-//            }
-//        }
-//    }
     items = jQuery.grep(items, function (value){
         return value.itemId !== id;
     });
     calculateTotal();
+    calculateRemainder();
 }
 function addToCart(id, name, price) {
 
@@ -66,10 +67,9 @@ function decreaseCount() {
     document.getElementById("itemCount").value = count;
 }
 
+
 function eraseCart(id, count, price) {
     $('#order' + count).remove();
-//    total -= parseInt(price, 10);
-//    updateTotal();
     removeItem(id);
     enableButton(id);
     decreaseCount();

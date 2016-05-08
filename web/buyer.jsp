@@ -200,7 +200,10 @@
                                         out.print("</div>");
                                         out.print("</div>");
                                     }
-
+                                    query = "SELECT credits FROM user where id='" + session.getAttribute("user_id") + "'";
+                                    resultSet = statement.executeQuery(query);
+                                    resultSet.next();
+                                    int credit = Integer.parseInt(resultSet.getObject(1).toString());
                                 %>
                             </div>
                         </div>
@@ -215,10 +218,10 @@
 
                             <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
 
-                            <div id="userCredit">Credit  : Rp. 0 </div>
-                            <div id="totalHarga">Total   : Rp. 0</div>
+                            <div id="userCredit" data-value="<%= credit %>">Credit  : Rp. <%= credit %> </div>
+                            <div id="totalHarga" data-value="0">Total   : Rp. 0</div>
                             <hr>
-                            <div id="sisaCredit">Sisa    : Rp. 0 </div>
+                            <div id="sisaCredit" data-value="<%= credit %>">Sisa    : Rp. <%= credit %> </div>
                             <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
                             <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
                             <input type="submit">
