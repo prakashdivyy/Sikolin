@@ -4,7 +4,6 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="org.json.simple.JSONObject"%>
-<%@page import="org.json.simple.parser.JSONParser"%>
 <%@page import="org.mindrot.jbcrypt.BCrypt"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%

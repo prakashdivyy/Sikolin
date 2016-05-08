@@ -29,7 +29,11 @@ nav .brand-logo {
     height: 100vh;
 }
 
-.tab {
-    color: black;
+.tabs .indicator{
+    background-color: black;
     
+}
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
 }
