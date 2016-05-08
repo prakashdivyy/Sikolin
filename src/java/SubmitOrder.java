@@ -40,6 +40,9 @@ public class SubmitOrder extends HttpServlet {
                 statement.addBatch(tempQuery);
             }
             statement.executeBatch();
+            int credit = Integer.parseInt(request.getParameter("sisacredit"));
+            query = "UPDATE user SET credits='"+credit+"' where id='"+userid+"'";
+            statement.executeUpdate(query);
             response.sendRedirect("statuspesanan.jsp");
         } finally {
             out.close();
