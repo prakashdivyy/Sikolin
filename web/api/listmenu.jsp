@@ -34,14 +34,16 @@
                 ResultSet resultSetMenu = statementMenu.executeQuery(queryMenu);
                 while (resultSetMenu.next()) {
                     JSONObject mymenu = new JSONObject();
-                    int id_menu = Integer.parseInt(resultSetMenu.getObject(1).toString());
-                    String nama_menu = resultSetMenu.getObject(2).toString();
-                    int jenis_menu = Integer.parseInt(resultSetMenu.getObject(3).toString());
-                    int harga_menu = Integer.parseInt(resultSetMenu.getObject(4).toString());
+                    int id_menu = resultSetMenu.getInt("id");
+                    String nama_menu = resultSetMenu.getString("nama");
+                    int jenis_menu = resultSetMenu.getInt("jenis");
+                    int harga_menu = resultSetMenu.getInt("harga");
                     Blob image = resultSetMenu.getBlob("foto");
                     byte[] imgData = image.getBytes(1, (int) image.length());
                     String foto_menu = Util.encode(imgData);
-                    int id_seller = Integer.parseInt(resultSetMenu.getObject(6).toString());
+                    int id_seller = resultSetMenu.getInt("id_seller");
+                    String deskripsi = resultSetMenu.getString("deskripsi");
+                    float rating = resultSetMenu.getFloat("total_rating");
                     Statement statementPenjual = connection.createStatement();
                     String queryPenjual = "SELECT username FROM user WHERE id='" + id_seller + "'";
                     ResultSet resultSetPenjual = statementPenjual.executeQuery(queryPenjual);
@@ -52,6 +54,8 @@
                     mymenu.put("jenis_menu", jenis_menu);
                     mymenu.put("harga_menu", harga_menu);
                     mymenu.put("foto_menu", foto_menu);
+                    mymenu.put("deskripsi", deskripsi);
+                    mymenu.put("rating", rating);
                     mymenu.put("nama_penjual", nama_penjual);
                     listMakanan.add(mymenu);
                 }
