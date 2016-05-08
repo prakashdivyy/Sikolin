@@ -274,16 +274,19 @@
                             <div class="pull-right">
                                 <table>
                                     <tr>
-                                        <td> Credit  : </td>
-                                        <td> <div id="userCredit" data-value="<%= credit%>"> Rp. <%= credit%> </div></td>
+                                        <td> Credit   </td>
+                                        <td> : Rp. </td>
+                                        <td> <div id="userCredit" data-value="<%= credit%>"><%= credit%> </div></td>
                                     </tr>
                                     <tr>
                                         <td>Total </td>
-                                        <td><div id="totalHarga" data-value="0">Rp. 0</div> </td>
+                                        <td> : Rp. </td>
+                                        <td><div id="totalHarga" data-value="0">0</div> </td>
                                     </tr>
                                     <hr>
                                     <tr>
                                         <td>Sisa :</td>
+                                        <td> : Rp. </td>
                                         <td><input id="sisacredit" name="sisacredit" type="text" value="<%= credit%>" style='pointer-events: none;'></td>
                                     </tr>
                                 </table>

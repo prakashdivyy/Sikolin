@@ -21,7 +21,7 @@ function calculateTotal() {
         total = total + (items[i].itemQty * items[i].itemPrc);
     }
     $("#totalHarga").attr("data-value", total);
-    $("#totalHarga").html("Total : Rp. " + total);
+    $("#totalHarga").html(total);
 }
 
 function calculateRemainder(){
@@ -81,7 +81,7 @@ function eraseCart(id, count, price) {
 }
 
 function updateTotal() {
-    $("#totalHarga").html("Total : Rp. " + total);
+    $("#totalHarga").html(total);
 }
 
 

@@ -97,7 +97,7 @@
                         String name = "";
                         int price = 0;
                         int foodtype = 0;
-                        int id_seller = Integer.parseInt(session.getAttribute("role").toString());
+                        int id_seller = Integer.parseInt(session.getAttribute("user_id").toString());
                         FileInputStream photo = null;
                         String dir_foto = "";
                         List fileItems = upload.parseRequest(request);
@@ -132,13 +132,14 @@
                         }
                         Class.forName("com.mysql.jdbc.Driver");
                         Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-                        String query = "INSERT INTO menu(nama, jenis, harga, foto, id_seller) values(?, ?, ?, ?, ?)";
+                        String query = "INSERT INTO menu(nama, jenis, harga, foto, deskripsi, id_seller) values(?, ?, ?, ?, ?, ?)";
                         PreparedStatement ps = connection.prepareStatement(query);
                         ps.setString(1, name);
                         ps.setInt(2, foodtype);
                         ps.setInt(3, price);
                         ps.setBlob(4, photo);
-                        ps.setInt(5, id_seller);
+                        ps.setString(5, "Makanan terenak di dunia ya oloh");
+                        ps.setInt(6, id_seller);
                         ps.executeUpdate();
                         ps.close();
                         response.sendRedirect("index.jsp");
