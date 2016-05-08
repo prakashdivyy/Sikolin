@@ -31,7 +31,7 @@ function calculateRemainder(){
     if (remainder < 0) {
         $("#submitOrder").addClass("disabledbutton");
     } else {
-        $("#submitOrder").addClass("enabledbutton");
+        $("#submitOrder").removeClass("disabledbutton");
     }
     document.getElementById("sisacredit").value = remainder;
 }
@@ -84,6 +84,7 @@ function updateTotal() {
     $("#totalHarga").html("Total : Rp. " + total);
 }
 
+
 function disableButton(id) {
     $("#button" + id).addClass("disabledbutton");
 }
@@ -91,4 +92,5 @@ function disableButton(id) {
 function enableButton(id) {
     $("#button" + id).removeClass("disabledbutton");
 }
+
 
