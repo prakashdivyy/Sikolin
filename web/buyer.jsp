@@ -43,7 +43,7 @@
             </div>
         </nav>
         <div class="row">
-            <div class="col s8">
+            <div class="col s8 columns">
                 <div class="card" style='height:65vh;'>
                     <div class="card-content">
                         <span class="card-title"> Daftar Menu Kantin Fasilkom </span>
@@ -61,7 +61,7 @@
                         <div id="makanan">
                             <div class="row">
                                 <%
-                                    String query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM MENU INNER JOIN USER ON menu.id_seller = user.id WHERE jenis='0'";
+                                    String query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id WHERE jenis='0'";
                                     Class.forName("com.mysql.jdbc.Driver");
                                     String userName = "root";
                                     String password = "root";
@@ -130,7 +130,7 @@
                         <div id="minuman">
                             <div class="row">
                                 <%                                    
-                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM MENU INNER JOIN USER ON menu.id_seller = user.id  WHERE jenis='1'";
+                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='1'";
                                     resultSet = statement.executeQuery(query);
 
                                     // process to show table
@@ -193,7 +193,7 @@
                         <div id="snack">
                             <div class="row">
                                 <%
-                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM MENU INNER JOIN USER ON menu.id_seller = user.id  WHERE jenis='2'";
+                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='2'";
                                     resultSet = statement.executeQuery(query);
 
                                     // process to show table
@@ -259,7 +259,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col s4">
+            <div class="col s4 columns">
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title left-align"> Shopping Cart  <i class='material-icons'>shopping_cart</i></span>
