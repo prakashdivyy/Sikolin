@@ -1,3 +1,4 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
@@ -18,6 +19,24 @@
         <link type="text/css" rel="stylesheet" href="assets/css/style.css"/>
         <title>Sikolin Home Page</title>
     </head>
+    <%
+        if ((request.getParameter("menu_id") != null) && (request.getParameter("form_id") != null) && (request.getParameter("progress") != null) && (request.getMethod().equalsIgnoreCase("POST"))) {
+            String dbUsername = "root";
+            String dbPassword = "root";
+            String dbUrl = "jdbc:mysql://localhost/sikolin";
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+            String menu_id = request.getParameter("menu_id");
+            String form_id = request.getParameter("form_id");
+            String progress = request.getParameter("progress");
+            // TODO LATER
+            //String updateTableSQL = "UPDATE pesanan SET USERNAME = ? WHERE USER_ID = ?";
+            //PreparedStatement preparedStatement = connection.prepareStatement(updateTableSQL);
+            //preparedStatement.setString(1, "mkyong_new_value");
+            //preparedStatement.setInt(2, 1001);
+            out.print(menu_id + " " + form_id + " " + progress);
+        }
+    %>
     <body class="light-blue lighten-5">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
@@ -62,28 +81,34 @@
                         while (resultSet.next()) {
                     %>
                     <div class="row">
-                        <div class="col s12">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="row">
-                                        <div class='col s2'>
-                                            <% out.print(resultSet.getString("nama")); %>
-                                        </div>
-                                        <div class='col s9 offset-s1'>
-                                            <h5><% out.print(resultSet.getString("nama")); %></h5>
-                                            <h6>Jumlah : <% out.print(resultSet.getInt("jumlah")); %></h6>
-                                            <h6>Id Pesanan : <% out.print(resultSet.getInt("id_form")); %></h6>
-                                            <h6>Pesan:</h6>
-                                            <% if (resultSet.getString("keterangan") != null) { %>
-                                            <p><% out.print(resultSet.getString("keterangan")); %></p>
-                                            <% } else { %>
-                                            <p>-</p>
-                                            <% } %>
+                        <form action="seller.jsp" method="POST">
+                            <div class="col s12">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="row">
+                                            <div class='col s2'>
+                                                <% out.print(resultSet.getString("nama")); %>
+                                            </div>
+                                            <div class='col s9 offset-s1'>
+                                                <input type="hidden" name="menu_id" value="<% out.print(resultSet.getInt("id_menu")); %>">
+                                                <input type="hidden" name="form_id" value="<% out.print(resultSet.getInt("id_form")); %>">
+                                                <input type="hidden" name="progress" value="0">
+                                                <h5><% out.print(resultSet.getString("nama")); %></h5>
+                                                <h6>Jumlah : <% out.print(resultSet.getInt("jumlah")); %></h6>
+                                                <h6>Id Pesanan : <% out.print(resultSet.getInt("id_form")); %></h6>
+                                                <h6>Pesan:</h6>
+                                                <% if (resultSet.getString("keterangan") != null) { %>
+                                                <p><% out.print(resultSet.getString("keterangan")); %></p>
+                                                <% } else { %>
+                                                <p>-</p>
+                                                <% } %>
+                                                <input type="submit" value="DONE">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <%
                         }
@@ -97,28 +122,34 @@
                         while (resultSet2.next()) {
                     %>
                     <div class="row">
-                        <div class="col s12">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="row">
-                                        <div class='col s2'>
-                                            <% out.print(resultSet2.getString("nama")); %>
-                                        </div>
-                                        <div class='col s9 offset-s1'>
-                                            <h5><% out.print(resultSet2.getString("nama")); %></h5>
-                                            <h6>Jumlah : <% out.print(resultSet2.getInt("jumlah")); %></h6>
-                                            <h6>Id Pesanan : <% out.print(resultSet2.getInt("id_form")); %></h6>
-                                            <h6>Pesan:</h6>
-                                            <% if (resultSet2.getString("keterangan") != null) { %>
-                                            <p><% out.print(resultSet2.getString("keterangan")); %></p>
-                                            <% } else { %>
-                                            <p>-</p>
-                                            <% } %>
+                        <form action="seller.jsp" method="POST">
+                            <div class="col s12">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="row">
+                                            <div class='col s2'>
+                                                <% out.print(resultSet2.getString("nama")); %>
+                                            </div>
+                                            <div class='col s9 offset-s1'>
+                                                <input type="hidden" name="menu_id" value="<% out.print(resultSet2.getInt("id_menu")); %>">
+                                                <input type="hidden" name="form_id" value="<% out.print(resultSet2.getInt("id_form")); %>">
+                                                <input type="hidden" name="progress" value="1">
+                                                <h5><% out.print(resultSet2.getString("nama")); %></h5>
+                                                <h6>Jumlah : <% out.print(resultSet2.getInt("jumlah")); %></h6>
+                                                <h6>Id Pesanan : <% out.print(resultSet2.getInt("id_form")); %></h6>
+                                                <h6>Pesan:</h6>
+                                                <% if (resultSet2.getString("keterangan") != null) { %>
+                                                <p><% out.print(resultSet2.getString("keterangan")); %></p>
+                                                <% } else { %>
+                                                <p>-</p>
+                                                <% } %>
+                                                <input type="submit" value="DONE">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <%
                         }

@@ -61,7 +61,7 @@
                         <div id="makanan">
                             <div class="row">
                                 <%
-                                    String query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM MENU INNER JOIN USER ON menu.id_seller = user.id WHERE jenis='0'";
+                                    String query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id WHERE jenis='0'";
                                     Class.forName("com.mysql.jdbc.Driver");
                                     String userName = "root";
                                     String password = "root";

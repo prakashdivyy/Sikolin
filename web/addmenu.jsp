@@ -60,6 +60,13 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s8 offset-s2">
+                                    <i class="material-icons prefix">mode_edit</i>
+                                    <textarea id="deskripsi" class="materialize-textarea" name="deskripsi" required></textarea>
+                                    <label for="deskripsi">Deskripsi</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s8 offset-s2">
                                     <i class="material-icons prefix">add_a_photo</i>
                                     <input id="photo" type="file" class="validate" name="photo" required>
                                 </div>
@@ -82,14 +89,14 @@
                 File file;
                 int maxFileSize = 5000 * 1024;
                 int maxMemSize = 5000 * 1024;
-                String filePath = "C:\\Users\\Kevin\\Desktop";
-//                String filePath = "/tmp/";
+                //     String filePath = "C:\\Users\\Kevin\\Desktop";
+                String filePath = "/tmp/";
                 String contentType = request.getContentType();
                 if ((contentType.indexOf("multipart/form-data") >= 0)) {
                     DiskFileItemFactory factory = new DiskFileItemFactory();
                     factory.setSizeThreshold(maxMemSize);
-                    factory.setRepository(new File("C:\\Users\\Kevin\\Desktop"));
-//                    factory.setRepository(new File("/tmp/"));
+//                    factory.setRepository(new File("C:\\Users\\Kevin\\Desktop"));
+                    factory.setRepository(new File("/tmp/"));
                     ServletFileUpload upload = new ServletFileUpload(factory);
                     upload.setSizeMax(maxFileSize);
                     try {
@@ -100,6 +107,7 @@
                         int price = 0;
                         int foodtype = 0;
                         int id_seller = Integer.parseInt(session.getAttribute("user_id").toString());
+                        String deskripsi = "";
                         FileInputStream photo = null;
                         String dir_foto = "";
                         List fileItems = upload.parseRequest(request);
@@ -129,6 +137,8 @@
                                     price = Integer.parseInt(fvalue);
                                 } else if (fname.equals("foodtype")) {
                                     foodtype = Integer.parseInt(fvalue);
+                                } else if (fname.equals("deskripsi")) {
+                                    deskripsi = fvalue;
                                 }
                             }
                         }
@@ -140,7 +150,7 @@
                         ps.setInt(2, foodtype);
                         ps.setInt(3, price);
                         ps.setBlob(4, photo);
-                        ps.setString(5, "Makanan terenak di dunia ya oloh");
+                        ps.setString(5, deskripsi);
                         ps.setInt(6, id_seller);
                         ps.executeUpdate();
                         ps.close();
