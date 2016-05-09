@@ -29,12 +29,17 @@
             String menu_id = request.getParameter("menu_id");
             String form_id = request.getParameter("form_id");
             String progress = request.getParameter("progress");
-            // TODO LATER
-            //String updateTableSQL = "UPDATE pesanan SET USERNAME = ? WHERE USER_ID = ?";
-            //PreparedStatement preparedStatement = connection.prepareStatement(updateTableSQL);
-            //preparedStatement.setString(1, "mkyong_new_value");
-            //preparedStatement.setInt(2, 1001);
-            out.print(menu_id + " " + form_id + " " + progress);
+            String updateTableSQL = "UPDATE pesanan SET status = ? WHERE id_menu = ? AND id_form = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(updateTableSQL);
+            if (progress.equals("0")) {
+                preparedStatement.setInt(1, 1);
+            } else if (progress.equals("1")) {
+                preparedStatement.setInt(1, 2);
+            }
+            preparedStatement.setInt(2, Integer.parseInt(menu_id));
+            preparedStatement.setInt(3, Integer.parseInt(form_id));
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         }
     %>
     <body class="light-blue lighten-5">
