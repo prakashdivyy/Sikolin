@@ -47,7 +47,7 @@
                     <img src="assets/img/textsikolin.png"  height="48"/>
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="buyer.jsp">Order Food</a></li>
+                    <li><a href="buyer.jsp">Pesan Makanan</a></li>
                     <li><a href="logout.jsp">Logout</a></li>
                 </ul>
             </div>

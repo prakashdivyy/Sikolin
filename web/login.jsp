@@ -17,10 +17,10 @@
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     </head>
-    <body class="light-blue">
+    <body class="teal lighten-2">
         <div class="container">
-            <div class="row">
-                <div class="col s6 offset-s3">
+            <div class="row valign-wrapper">
+                <div class="col s6 offset-s3 valign">
                     <br>
                     <div class="card-panel">
                         <div class="center-align row">
@@ -56,6 +56,7 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
         <%
             if ((request.getParameter("username") != null) && (request.getParameter("password") != null) && (request.getMethod().equalsIgnoreCase("POST"))) {
                 String dbUsername = "root";
@@ -86,6 +87,7 @@
         <script>
             $(document).ready(function () {
                 Materialize.toast('Invalid Username or Password', 4000);
+
             });
         </script>
         <%
@@ -95,12 +97,14 @@
         <script>
             $(document).ready(function () {
                 Materialize.toast('Invalid Username or Password', 4000);
+
             });
         </script>
         <%
                 }
             }
         %>
+
     </body>
 </html>
 <%

@@ -32,7 +32,7 @@
                     <li><a href="logout.jsp">Logout</a></li>
                 </ul>-->
         <nav>
-            <div class="nav-wrapper teal lighten-1 z-depth-2 ">
+            <div class="nav-wrapper teal lighten-2 z-depth-2 ">
                 <a href="index.jsp" class="brand-logo">
                     <img src="assets/img/logosikolin.png" height="64"/>
                     <img src="assets/img/textsikolin.png"  height="48"/>
@@ -62,7 +62,7 @@
                         <div id="makanan" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
                                 <%
-                                    String query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id WHERE jenis='0'";
+                                    String query = "SELECT  menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id WHERE jenis='0'";
                                     Class.forName("com.mysql.jdbc.Driver");
                                     String userName = "root";
                                     String password = "root";
@@ -78,7 +78,7 @@
                                         Blob image = resultSet.getBlob("foto");
                                         byte[] imgData = image.getBytes(1, (int) image.length());
                                         String foto_menu = Util.encode(imgData);
-                                        
+
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
                                         out.print("<div class='card-content'>");
@@ -104,11 +104,11 @@
                                         out.print("<div class='col s8 offset-s1'>");
                                         out.print("<h4> " + resultSet.getObject(2) + " </h4>");
                                         out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
-                                        out.print("<h5> Rating: 9.8/10 </h5>");
+                                        out.print("<h5> Rating: " + resultSet.getFloat("total_rating") + "/10 </h5>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("<p> "+resultSet.getObject(6)+" </p> ");
-
+                                        out.print("<h4> Deskripsi </h3>");
+                                        out.print("<h5> " + resultSet.getObject(6) + " </h5> ");
                                         out.print("</div>");
                                         out.print("<div class='modal-footer'>");
                                         out.print("<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>");
@@ -116,14 +116,13 @@
                                         out.print("</div>");
                                         out.print("<div class='col s1'><br/><br/><br/>");
 
-                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
+                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
 
                                         out.print("</div>");
                                         out.print("</div>");
                                         out.print("</div>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        
 
                                     }
 
@@ -132,8 +131,7 @@
                         </div>
                         <div id="minuman" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
-                                <%                                    
-                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='1'";
+                                <%                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='1'";
                                     resultSet = statement.executeQuery(query);
 
                                     // process to show table
@@ -168,11 +166,11 @@
                                         out.print("<div class='col s8 offset-s1'>");
                                         out.print("<h4> " + resultSet.getObject(2) + " </h4>");
                                         out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
-                                        out.print("<h5> Rating: 9.8/10 </h5>");
+                                        out.print("<h5> Rating: " + resultSet.getFloat("total_rating") + "/10 </h5>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("<p> "+resultSet.getObject(6)+" </p> ");
-
+                                        out.print("<h4> Deskripsi </h3>");
+                                        out.print("<h5> " + resultSet.getObject(6) + " </h5> ");
                                         out.print("</div>");
                                         out.print("<div class='modal-footer'>");
                                         out.print("<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>");
@@ -180,7 +178,7 @@
                                         out.print("</div>");
                                         out.print("<div class='col s1'><br/><br/><br/>");
 
-                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
+                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
 
                                         out.print("</div>");
                                         out.print("</div>");
@@ -195,8 +193,7 @@
                         </div>
                         <div id="snack" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
-                                <%
-                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='2'";
+                                <%                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='2'";
                                     resultSet = statement.executeQuery(query);
 
                                     // process to show table
@@ -231,11 +228,11 @@
                                         out.print("<div class='col s8 offset-s1'>");
                                         out.print("<h4> " + resultSet.getObject(2) + " </h4>");
                                         out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
-                                        out.print("<h5> Rating: 9.8/10 </h5>");
+                                        out.print("<h5> Rating: " + resultSet.getFloat("total_rating") + "/10 </h5>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("<p> "+resultSet.getObject(6)+" </p> ");
-
+                                        out.print("<h4> Deskripsi </h3>");
+                                        out.print("<h5> " + resultSet.getObject(6) + " </h5> ");
                                         out.print("</div>");
                                         out.print("<div class='modal-footer'>");
                                         out.print("<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>");
@@ -243,7 +240,7 @@
                                         out.print("</div>");
                                         out.print("<div class='col s1'><br/><br/><br/>");
 
-                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
+                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
 
                                         out.print("</div>");
                                         out.print("</div>");
@@ -271,25 +268,27 @@
                             <div class="pull-right">
                                 <table>
                                     <tr>
-                                        <td> Credit   </td>
+                                        <td> <b>Credit</b>   </td>
                                         <td> : Rp. </td>
                                         <td> <div id="userCredit" data-value="<%= credit%>"><%= credit%> </div></td>
                                     </tr>
                                     <tr>
-                                        <td>Total </td>
+                                        <td> <b>Total </b> </td>
                                         <td> : Rp. </td>
                                         <td><div id="totalHarga" data-value="0">0</div> </td>
                                     </tr>
                                     <hr>
                                     <tr>
-                                        <td>Sisa :</td>
+                                        <td><b>Sisa </b></td>
                                         <td> : Rp. </td>
                                         <td><input id="sisacredit" name="sisacredit" type="text" value="<%= credit%>" style='pointer-events: none;'></td>
                                     </tr>
                                 </table>
                                 <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
                                 <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
-                                <input id="submitOrder" class="btn btn-primary" type="submit">
+                                <div class="right-align">
+                                    <input id="submitOrder" class="btn btn-primary teal lighten-2" type="submit">
+                                </div>
                             </div>
                         </form>
                     </div>
