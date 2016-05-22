@@ -1,3 +1,5 @@
+<%@page import="org.sikolin.Util"%>
+<%@page import="java.sql.Blob"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.sql.DriverManager"%>
@@ -17,7 +19,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
         <link type="text/css" rel="stylesheet" href="assets/css/animate.css" media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="assets/css/style.css"/>
-        <title>Sikolin Home Page</title>
+        <title>Dashboard Seller</title>
     </head>
     <%
         if ((request.getParameter("menu_id") != null) && (request.getParameter("form_id") != null) && (request.getParameter("progress") != null) && (request.getMethod().equalsIgnoreCase("POST"))) {
@@ -33,14 +35,51 @@
             PreparedStatement preparedStatement = connection.prepareStatement(updateTableSQL);
             if (progress.equals("0")) {
                 preparedStatement.setInt(1, 1);
+                preparedStatement.setInt(2, Integer.parseInt(menu_id));
+                preparedStatement.setInt(3, Integer.parseInt(form_id));
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
             } else if (progress.equals("1")) {
                 preparedStatement.setInt(1, 2);
+                preparedStatement.setInt(2, Integer.parseInt(menu_id));
+                preparedStatement.setInt(3, Integer.parseInt(form_id));
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+                String query = "SELECT jumlah, harga, id_seller FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_form='" + form_id + "'";
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+                resultSet.next();
+                int jumlah = resultSet.getInt("jumlah");
+                int harga = resultSet.getInt("harga");
+                int id_seller = resultSet.getInt("id_seller");
+                int addMoney = jumlah * harga;
+                String query2 = "SELECT credits FROM user WHERE id='" + id_seller + "'";
+                Statement statement2 = connection.createStatement();
+                ResultSet resultSet2 = statement2.executeQuery(query2);
+                resultSet2.next();
+                int credits = resultSet2.getInt("credits") + addMoney;
+                String updateTableSQL2 = "UPDATE user SET credits = ? WHERE id = ?";
+                PreparedStatement preparedStatement2 = connection.prepareStatement(updateTableSQL2);
+                preparedStatement2.setInt(1, credits);
+                preparedStatement2.setInt(2, id_seller);
+                preparedStatement2.executeUpdate();
+                preparedStatement2.close();
             }
-            preparedStatement.setInt(2, Integer.parseInt(menu_id));
-            preparedStatement.setInt(3, Integer.parseInt(form_id));
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
         }
+    %>
+
+    <%
+        String userid = session.getAttribute("user_id").toString();
+        String dbUsername = "root";
+        String dbPassword = "root";
+        String dbUrl = "jdbc:mysql://localhost/sikolin";
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+        String qu = "SELECT credits FROM user WHERE id='" + userid + "'";
+        Statement st = connection.createStatement();
+        ResultSet re = st.executeQuery(qu);
+        re.next();
+        int credits = re.getInt("credits");
     %>
     <body class="light-blue lighten-5">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
@@ -53,19 +92,12 @@
                     <img src="assets/img/textsikolin.png"  height="48"/>
                 </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>Credits : Rp. <% out.print(credits); %></li>
                     <li><a href="addmenu.jsp">Tambah Menu</a></li>
                     <li><a href="logout.jsp">Logout</a></li>
                 </ul>
             </div>
         </nav>
-        <%
-            String userid = session.getAttribute("user_id").toString();
-            String dbUsername = "root";
-            String dbPassword = "root";
-            String dbUrl = "jdbc:mysql://localhost/sikolin";
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-        %>
         <div class="row">
             <div class="col s12 amber lighten-4">
                 <div class="row">
@@ -79,121 +111,177 @@
                     </div>
                 </div>
                 <div id="neworder">
-                    <%
-                        String query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=0";
-                        Statement statement = connection.createStatement();
-                        ResultSet resultSet = statement.executeQuery(query);
-                        while (resultSet.next()) {
-                    %>
                     <div class="row">
+                        <%
+                            String query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=0";
+                            Statement statement = connection.createStatement();
+                            ResultSet resultSet = statement.executeQuery(query);
+                            while (resultSet.next()) {
+                                Blob image = resultSet.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                int form_id = resultSet.getInt("id_form");
+                                String uname1 = "SELECT username FROM form INNER JOIN user on form.id_user=user.id WHERE form.id='" + form_id + "'";
+                                Statement q1 = connection.createStatement();
+                                ResultSet r1 = q1.executeQuery(uname1);
+                                r1.next();
+                                String username = r1.getString("username");
+                        %>
                         <form action="seller.jsp" method="POST">
-                            <div class="col s12">
+                            <div class="col s3">
                                 <div class="card">
+                                    <div class="card-image">
+                                        <img src="<% out.print(img); %>">
+                                        <span class="card-title"><% out.print(resultSet.getString("nama")); %></span>
+                                    </div>
                                     <div class="card-content">
-                                        <div class="row">
-                                            <div class='col s2'>
-                                                <% out.print(resultSet.getString("nama")); %>
-                                            </div>
-                                            <div class='col s9 offset-s1'>
-                                                <input type="hidden" name="menu_id" value="<% out.print(resultSet.getInt("id_menu")); %>">
-                                                <input type="hidden" name="form_id" value="<% out.print(resultSet.getInt("id_form")); %>">
-                                                <input type="hidden" name="progress" value="0">
-                                                <h5><% out.print(resultSet.getString("nama")); %></h5>
-                                                <h6>Jumlah : <% out.print(resultSet.getInt("jumlah")); %></h6>
-                                                <h6>Id Pesanan : <% out.print(resultSet.getInt("id_form")); %></h6>
-                                                <h6>Pesan:</h6>
-                                                <% if (resultSet.getString("keterangan") != null) { %>
-                                                <p><% out.print(resultSet.getString("keterangan")); %></p>
-                                                <% } else { %>
-                                                <p>-</p>
-                                                <% } %>
-                                                <input type="submit" value="DONE">
-                                            </div>
-                                        </div>
+                                        <input type="hidden" name="menu_id" value="<% out.print(resultSet.getInt("id_menu")); %>">
+                                        <input type="hidden" name="form_id" value="<% out.print(resultSet.getInt("id_form")); %>">
+                                        <input type="hidden" name="progress" value="0">
+                                        <p>
+                                            <b>Id Pesanan :</b> 
+                                            <% out.print(resultSet.getInt("id_form")); %>
+                                        </p>
+                                        <p>
+                                            <b>Pemesan :</b> 
+                                            <% out.print(username); %>
+                                        </p>
+                                        <p>
+                                            <b>Jumlah :</b> 
+                                            <% out.print(resultSet.getInt("jumlah")); %>
+                                        </p>
+                                        <p>
+                                            <b>Pesan :</b>
+                                        </p>
+                                        <p>
+                                            <% if (resultSet.getString("keterangan") != null) { %>
+                                            <% out.print(resultSet.getString("keterangan")); %>
+                                            <% } else { %>
+                                            -
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                    <div class="card-action">
+                                        <input class="waves-effect waves-light btn teal lighten-2" type="submit" value="Mulai Masak">
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        <%
+                            }
+                        %>
                     </div>
-                    <%
-                        }
-                    %>
                 </div>
                 <div id="inprogress">
-                    <%
-                        query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=1";
-                        Statement statement2 = connection.createStatement();
-                        ResultSet resultSet2 = statement2.executeQuery(query);
-                        while (resultSet2.next()) {
-                    %>
                     <div class="row">
+                        <%
+                            query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=1";
+                            Statement statement2 = connection.createStatement();
+                            ResultSet resultSet2 = statement2.executeQuery(query);
+                            while (resultSet2.next()) {
+                                Blob image = resultSet2.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                int form_id = resultSet2.getInt("id_form");
+                                String uname2 = "SELECT username FROM form INNER JOIN user on form.id_user=user.id WHERE form.id='" + form_id + "'";
+                                Statement q2 = connection.createStatement();
+                                ResultSet r2 = q2.executeQuery(uname2);
+                                r2.next();
+                                String username = r2.getString("username");
+                        %>
                         <form action="seller.jsp" method="POST">
-                            <div class="col s12">
+                            <div class="col s3">
                                 <div class="card">
+                                    <div class="card-image">
+                                        <img src="<% out.print(img); %>">
+                                        <span class="card-title"><% out.print(resultSet2.getString("nama")); %></span>
+                                    </div>
                                     <div class="card-content">
-                                        <div class="row">
-                                            <div class='col s2'>
-                                                <% out.print(resultSet2.getString("nama")); %>
-                                            </div>
-                                            <div class='col s9 offset-s1'>
-                                                <input type="hidden" name="menu_id" value="<% out.print(resultSet2.getInt("id_menu")); %>">
-                                                <input type="hidden" name="form_id" value="<% out.print(resultSet2.getInt("id_form")); %>">
-                                                <input type="hidden" name="progress" value="1">
-                                                <h5><% out.print(resultSet2.getString("nama")); %></h5>
-                                                <h6>Jumlah : <% out.print(resultSet2.getInt("jumlah")); %></h6>
-                                                <h6>Id Pesanan : <% out.print(resultSet2.getInt("id_form")); %></h6>
-                                                <h6>Pesan:</h6>
-                                                <% if (resultSet2.getString("keterangan") != null) { %>
-                                                <p><% out.print(resultSet2.getString("keterangan")); %></p>
-                                                <% } else { %>
-                                                <p>-</p>
-                                                <% } %>
-                                                <input type="submit" value="DONE">
-                                            </div>
-                                        </div>
+                                        <input type="hidden" name="menu_id" value="<% out.print(resultSet2.getInt("id_menu")); %>">
+                                        <input type="hidden" name="form_id" value="<% out.print(resultSet2.getInt("id_form")); %>">
+                                        <input type="hidden" name="progress" value="1">
+                                        <p>
+                                            <b>Id Pesanan :</b> 
+                                            <% out.print(resultSet2.getInt("id_form")); %>
+                                        </p>
+                                        <p>
+                                            <b>Jumlah :</b> 
+                                            <% out.print(resultSet2.getInt("jumlah")); %>
+                                        </p>
+                                        <p>
+                                            <b>Pesan :</b>
+                                        </p>
+                                        <p>
+                                            <% if (resultSet2.getString("keterangan") != null) { %>
+                                            <% out.print(resultSet2.getString("keterangan")); %>
+                                            <% } else { %>
+                                            -
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                    <div class="card-action">
+                                        <input class="waves-effect waves-light btn teal lighten-2" type="submit" value="Selesai Masak">
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        <%
+                            }
+                        %>
                     </div>
-                    <%
-                        }
-                    %>
                 </div>
                 <div id="completed">
-                    <%
-                        query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=2";
-                        Statement statement3 = connection.createStatement();
-                        ResultSet resultSet3 = statement3.executeQuery(query);
-                        while (resultSet3.next()) {
-                    %>
                     <div class="row">
-                        <div class="col s12">
+                        <%
+                            query = "SELECT * FROM pesanan INNER JOIN menu on pesanan.id_menu=menu.id WHERE id_seller='" + userid + "' AND status=2";
+                            Statement statement3 = connection.createStatement();
+                            ResultSet resultSet3 = statement3.executeQuery(query);
+                            while (resultSet3.next()) {
+                                Blob image = resultSet3.getBlob("foto");
+                                byte[] imgData = image.getBytes(1, (int) image.length());
+                                String foto_menu = Util.encode(imgData);
+                                String img = "data:image/jpeg;base64," + foto_menu;
+                                int form_id = resultSet3.getInt("id_form");
+                                String uname3 = "SELECT username FROM form INNER JOIN user on form.id_user=user.id WHERE form.id='" + form_id + "'";
+                                Statement q3 = connection.createStatement();
+                                ResultSet r3 = q3.executeQuery(uname3);
+                                r3.next();
+                                String username = r3.getString("username");
+                        %>
+                        <div class="col s3">
                             <div class="card">
+                                <div class="card-image">
+                                    <img src="<% out.print(img); %>">
+                                    <span class="card-title"><% out.print(resultSet3.getString("nama")); %></span>
+                                </div>
                                 <div class="card-content">
-                                    <div class="row">
-                                        <div class='col s2'>
-                                            <% out.print(resultSet3.getString("nama")); %>
-                                        </div>
-                                        <div class='col s9 offset-s1'>
-                                            <h5><% out.print(resultSet3.getString("nama")); %></h5>
-                                            <h6>Jumlah : <% out.print(resultSet3.getInt("jumlah")); %></h6>
-                                            <h6>Id Pesanan : <% out.print(resultSet3.getInt("id_form")); %></h6>
-                                            <h6>Pesan:</h6>
-                                            <% if (resultSet3.getString("keterangan") != null) { %>
-                                            <p><% out.print(resultSet3.getString("keterangan")); %></p>
-                                            <% } else { %>
-                                            <p>-</p>
-                                            <% } %>
-                                        </div>
-                                    </div>
+                                    <p>
+                                        <b>Id Pesanan :</b> 
+                                        <% out.print(resultSet3.getInt("id_form")); %>
+                                    </p>
+                                    <p>
+                                        <b>Jumlah :</b> 
+                                        <% out.print(resultSet3.getInt("jumlah")); %>
+                                    </p>
+                                    <p>
+                                        <b>Pesan :</b>
+                                    </p>
+                                    <p>
+                                        <% if (resultSet3.getString("keterangan") != null) { %>
+                                        <% out.print(resultSet3.getString("keterangan")); %>
+                                        <% } else { %>
+                                        -
+                                        <% } %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
+                        <%
+                            }
+                        %>
                     </div>
-                    <%
-                        }
-                    %>
                 </div>
             </div>
         </div>
