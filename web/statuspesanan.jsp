@@ -152,11 +152,10 @@
                                             </div>
                                             <input type="submit" class="btn btn-primary" value="Submit Rating">
                                         </form>
-
                                         <%
-                                                    break;
-                                                case 3:
-                                                %>
+                                                break;
+                                            case 3:
+                                        %>
                                         <i class="large material-icons">rate_review</i>
                                         <h5> Reviewed! </h5>
                                         <%
