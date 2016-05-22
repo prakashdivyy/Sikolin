@@ -38,13 +38,14 @@
                     <img src="assets/img/textsikolin.png"  height="48"/>
                 </a>
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="statuspesanan.jsp"> Cek pesanan </a></li>
                     <li><a href="logout.jsp">Logout</a></li>
                 </ul>
             </div>
         </nav>
         <div class="row">
-            <div class="col s8 columns">
-                <div class="card" style='height:65vh;'>
+            <div class="col s8">
+                <div class="card columns">
                     <div class="card-content">
                         <span class="card-title"> Daftar Menu Kantin Fasilkom </span>
                         <div id='tabchooser' class="row">
@@ -77,6 +78,7 @@
                                         Blob image = resultSet.getBlob("foto");
                                         byte[] imgData = image.getBytes(1, (int) image.length());
                                         String foto_menu = Util.encode(imgData);
+                                        
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
                                         out.print("<div class='card-content'>");
@@ -121,6 +123,7 @@
                                         out.print("</div>");
                                         out.print("</div>");
                                         out.print("</div>");
+                                        
 
                                     }
 
@@ -259,12 +262,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col s4 columns">
-                <div class="card">
+            <div class="col s4">
+                <div class="card columns">
                     <div class="card-content">
                         <span class="card-title left-align"> Shopping Cart  <i class='material-icons'>shopping_cart</i></span>
                         <form action="SubmitOrder">
-
                             <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
                             <div class="pull-right">
                                 <table>
@@ -287,7 +289,7 @@
                                 </table>
                                 <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
                                 <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
-                                <input id="submitOrder" type="submit">
+                                <input id="submitOrder" class="btn btn-primary" type="submit">
                             </div>
                         </form>
                     </div>

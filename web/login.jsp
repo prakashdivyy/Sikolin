@@ -108,8 +108,10 @@
         int role = Integer.parseInt(session.getAttribute("role").toString());
         if (role == 0) {
             response.sendRedirect("buyer.jsp");
-        } else {
+        } else if (role == 1) {
             response.sendRedirect("seller.jsp");
+        } else {
+            response.sendRedirect("admin.jsp");
         }
     }
 %>

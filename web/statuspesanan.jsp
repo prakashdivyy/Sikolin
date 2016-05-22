@@ -47,6 +47,7 @@
                     <img src="assets/img/textsikolin.png"  height="48"/>
                 </a>
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="buyer.jsp">Order Food</a></li>
                     <li><a href="logout.jsp">Logout</a></li>
                 </ul>
             </div>
@@ -59,7 +60,7 @@
                         <span class="card-title center-align"> <strong>Status Pesanan </strong></span>
 
                         <%            String userid = session.getAttribute("user_id").toString();
-                            String query = "SELECT P.id_form, P.jumlah, P.keterangan, P.status, M.nama, M.foto, U.username from pesanan P inner join menu M on P.id_menu = M.id inner join user U on M.id_seller = U.id, form F where P.id_form = F.id and F.id_user=" + userid;
+                            String query = "SELECT P.id_form, P.jumlah, P.keterangan, P.status, M.nama, M.foto, U.username from pesanan P inner join menu M on P.id_menu = M.id inner join user U on M.id_seller = U.id, form F where P.id_form = F.id and F.id_user=" + userid + " ORDER BY P.status ASC";
                             Class.forName("com.mysql.jdbc.Driver");
                             String userName = "root";
                             String password = "root";
@@ -111,14 +112,14 @@
                                         <br>
                                         <i class="large material-icons">input</i>
                                         <%
-                                                break;
-                                            case 1:
+                                                    break;
+                                                case 1:
                                         %>
                                         <br>
                                         <i class="large material-icons">rowingt</i>
                                         <%
-                                                break;
-                                            case 2:
+                                                    break;
+                                                case 2:
                                         %>
                                         <br>
                                         <i class="large material-icons">done</i>

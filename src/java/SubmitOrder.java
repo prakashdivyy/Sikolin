@@ -27,8 +27,13 @@ public class SubmitOrder extends HttpServlet {
             Connection connection = DriverManager.getConnection(url, userName, password);
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT * from form");
-            result.last();
-            int new_id = Integer.parseInt(result.getString(1)) + 1;
+            int new_id;
+            if (!result.isBeforeFirst()) {
+                new_id = 1;
+            } else {
+                result.last();
+                new_id = Integer.parseInt(result.getString(1)) + 1;
+            }
             int userid = Integer.parseInt(request.getParameter("userid"));
             String query = "INSERT INTO form  values (" + new_id + "," + userid + ", NOW())";
             statement.addBatch(query);
@@ -41,7 +46,7 @@ public class SubmitOrder extends HttpServlet {
             }
             statement.executeBatch();
             int credit = Integer.parseInt(request.getParameter("sisacredit"));
-            query = "UPDATE user SET credits='"+credit+"' where id='"+userid+"'";
+            query = "UPDATE user SET credits='" + credit + "' where id='" + userid + "'";
             statement.executeUpdate(query);
             response.sendRedirect("statuspesanan.jsp");
         } finally {
