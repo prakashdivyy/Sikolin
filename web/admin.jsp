@@ -69,7 +69,7 @@
                                         <input id="credits" name="credits" type="number">    
                                     </td>
                                     <td>
-                                        <input id="addCredits" class="waves-effect waves-light btn" type="submit">
+                                        <input id="addCredits" class="waves-effect waves-light btn teal lighten-2" type="submit">
                                     </td>
                                 </tr>
                                 <input type="hidden" name="usercredit" value="<%= resultSet.getString("credits")%>">
