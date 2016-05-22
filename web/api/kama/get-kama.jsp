@@ -9,7 +9,7 @@
             int kama_user_id = Integer.parseInt(request.getParameter("user_id"));
             int sikolin_user_id = Integer.parseInt(session.getAttribute("user_id").toString());
             if (kama_user_id != sikolin_user_id) {
-                response.sendRedirect("../buyer.jsp");
+                response.sendRedirect("../../buyer.jsp");
             } else {
                 String dbUsername = "root";
                 String dbPassword = "root";
@@ -23,12 +23,12 @@
                 preparedStatement.setInt(2, kama_user_id);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
-                response.sendRedirect("../buyer.jsp");
+                response.sendRedirect("../../buyer.jsp");
             }
         } catch (Exception e) {
-            response.sendRedirect("../buyer.jsp");
+            response.sendRedirect("../../buyer.jsp");
         }
     } else {
-        response.sendRedirect("../login.jsp");
+        response.sendRedirect("../../login.jsp");
     }
 %>
