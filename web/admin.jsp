@@ -3,7 +3,6 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% int count = 0; %>
 <%@page session="true"%>
 <%
     if ((session.getAttribute("user_id") != null) && (session.getAttribute("role") != null) && (session.getAttribute("role").toString().equals("2"))) {
@@ -58,7 +57,7 @@
                                 while (resultSet.next()) {
                             %>
                             <form action="AddCredits">
-                                <div class="col s6">
+                                <div class="col s3">
                                     <div class="card">
                                         <div class="card-content">
                                             <div class="row">
