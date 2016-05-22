@@ -34,11 +34,11 @@
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="assets/js/materialize.min.js"></script>
-        <script>
-            setTimeout(function () {
-                window.location.reload(1);
-            }, 10000);
-        </script>
+        <!--        <script>
+                    setTimeout(function () {
+                        window.location.reload(1);
+                    }, 10000);
+                </script>-->
 
         <nav>
             <div class="nav-wrapper teal lighten-1 z-depth-2 ">
@@ -60,7 +60,7 @@
                         <span class="card-title center-align"> <strong>Status Pesanan </strong></span>
 
                         <%            String userid = session.getAttribute("user_id").toString();
-                            String query = "SELECT P.id_form, P.jumlah, P.keterangan, P.status, M.nama, M.foto, U.username from pesanan P inner join menu M on P.id_menu = M.id inner join user U on M.id_seller = U.id, form F where P.id_form = F.id and F.id_user=" + userid + " ORDER BY P.status ASC";
+                            String query = "SELECT M.id, P.id_form, P.jumlah, P.keterangan, P.status, M.nama, M.foto, U.username from pesanan P inner join menu M on P.id_menu = M.id inner join user U on M.id_seller = U.id, form F where P.id_form = F.id and F.id_user=" + userid + " ORDER BY P.status ASC";
                             Class.forName("com.mysql.jdbc.Driver");
                             String userName = "root";
                             String password = "root";
@@ -83,7 +83,7 @@
                                     <div class="col s2">
                                         <img src="<%= img%>" width="200px" height="200px">
                                     </div>
-                                    <div class="col s8 offset-s1">
+                                    <div class="col s7 offset-s1">
                                         <h5> <%= resultSet.getString("nama")%> </h5>
                                         <table class="responsive-table highlight">
                                             <thead>
@@ -102,7 +102,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="col s1">
+                                    <div class="col s2 center-align">
                                         <h5> Status </h5>
                                         <%
 
@@ -111,20 +111,55 @@
                                         %>
                                         <br>
                                         <i class="large material-icons">input</i>
+                                        <h5> Ordered! </h5>
                                         <%
-                                                    break;
-                                                case 1:
+                                                break;
+                                            case 1:
                                         %>
                                         <br>
-                                        <i class="large material-icons">rowingt</i>
+                                        <i class="large material-icons">restaurant_menu</i>
+                                        <h5> Being cooked! </h5>
                                         <%
-                                                    break;
-                                                case 2:
+                                                break;
+                                            case 2:
                                         %>
                                         <br>
+
                                         <i class="large material-icons">done</i>
+                                        <h5> Done! </h5>
+                                        <form action="AddRating">
+                                            <input name="id_menu" type="hidden" value="<%= resultSet.getInt("id")%>">
+
+                                            <input name="id_form" type="hidden" value="<%= resultSet.getInt("id_form")%>">
+                                            <div class="row">
+                                                <div class="col s3">
+                                                    Rate Food:
+                                                </div>
+                                                <div class="col s9">
+                                                    <select class="browser-default" name="rating">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <input type="submit" class="btn btn-primary" value="Submit Rating">
+                                        </form>
+
                                         <%
                                                     break;
+                                                case 3:
+                                                %>
+                                        <i class="large material-icons">rate_review</i>
+                                        <h5> Reviewed! </h5>
+                                        <%
                                             }
                                         %>
                                     </div>
@@ -137,7 +172,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>            
     </body>
 </html>
 <%

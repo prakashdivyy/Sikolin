@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="makanan">
+                        <div id="makanan" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
                                 <%
                                     String query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id WHERE jenis='0'";
@@ -130,7 +130,7 @@
                                 %>
                             </div>
                         </div>
-                        <div id="minuman">
+                        <div id="minuman" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
                                 <%                                    
                                     query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='1'";
@@ -193,7 +193,7 @@
                                 %>
                             </div>
                         </div>
-                        <div id="snack">
+                        <div id="snack" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
                                 <%
                                     query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='2'";
@@ -267,7 +267,7 @@
                     <div class="card-content">
                         <span class="card-title left-align"> Shopping Cart  <i class='material-icons'>shopping_cart</i></span>
                         <form action="SubmitOrder">
-                            <div id="shopcart" style="overflow-y: scroll; height:65vh;"></div>
+                            <div id="shopcart" style="overflow-y: scroll; height:50vh;"></div>
                             <div class="pull-right">
                                 <table>
                                     <tr>
