@@ -12,18 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!--        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                Import Google Icon Font
-                <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
-                Import materialize.css
-                <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
-                <link type="text/css" rel="stylesheet" href="assets/css/animate.css"  media="screen,projection"/>
-        
-                <link type="text/css" rel="stylesheet" href="assets/css/style.css"/>
-                <title>Cek status</title> -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
         <link type="text/css" rel="stylesheet" href="assets/css/animate.css" media="screen,projection"/>
@@ -31,15 +20,8 @@
         <title>Sikolin Cek Pesanan</title>
     </head>
     <body class="light-blue lighten-5">
-        <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="assets/js/materialize.min.js"></script>
-        <!--        <script>
-                    setTimeout(function () {
-                        window.location.reload(1);
-                    }, 10000);
-                </script>-->
-
         <nav>
             <div class="nav-wrapper teal lighten-1 z-depth-2 ">
                 <a href="index.jsp" class="brand-logo">
@@ -58,8 +40,8 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title center-align"> <strong>Status Pesanan </strong></span>
-
-                        <%            String userid = session.getAttribute("user_id").toString();
+                        <%
+                            String userid = session.getAttribute("user_id").toString();
                             String query = "SELECT M.id, P.id_form, P.jumlah, P.keterangan, P.status, M.nama, M.foto, U.username from pesanan P inner join menu M on P.id_menu = M.id inner join user U on M.id_seller = U.id, form F where P.id_form = F.id and F.id_user=" + userid + " ORDER BY P.status ASC";
                             Class.forName("com.mysql.jdbc.Driver");
                             String userName = "root";
@@ -76,12 +58,11 @@
                                 String img = "data:image/jpeg;base64," + foto_menu;
 
                         %>
-
                         <div class="card">
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col s2">
-                                        <img src="<%= img%>" width="200px" height="200px">
+                                        <img src="<%= img %>" width="200px" height="200px">
                                     </div>
                                     <div class="col s7 offset-s1">
                                         <h5> <%= resultSet.getString("nama")%> </h5>
@@ -124,12 +105,10 @@
                                             case 2:
                                         %>
                                         <br>
-
                                         <i class="large material-icons">done</i>
                                         <h5> Done! </h5>
                                         <form action="AddRating">
                                             <input name="id_menu" type="hidden" value="<%= resultSet.getInt("id")%>">
-
                                             <input name="id_form" type="hidden" value="<%= resultSet.getInt("id_form")%>">
                                             <div class="row">
                                                 <div class="col s3">
