@@ -37,3 +37,7 @@ nav .brand-logo {
     pointer-events: none;
     opacity: 0.4;
 }
+
+.modal{
+    width: 40% !important
+}
