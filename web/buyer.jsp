@@ -26,7 +26,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
         <script src="assets/js/homepage.js"></script>
         <nav>
-            <div class="nav-wrapper teal lighten-2 z-depth-2 ">
+            <div class="nav-wrapper light-blue lighten-1 z-depth-2 ">
                 <a href="index.jsp" class="brand-logo">
                     <img src="assets/img/logosikolin.png" height="64"/>
                     <img src="assets/img/textsikolin.png"  height="48"/>
@@ -81,7 +81,7 @@
                                         out.print("<h6>Harga : Rp. " + resultSet.getObject(4) + "</h6>");
                                         out.print("</div>");
                                         out.print("<div class='card-action'>");
-                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
+                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn light-blue lighten-1' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
                                         out.print("</div>");
                                         out.print("<div class='card-reveal'>");
                                         out.print("<span class='card-title grey-text text-darken-4'>" + resultSet.getObject(2) + "<i class='material-icons right'>close</i></span>");
@@ -132,7 +132,7 @@
                                         out.print("<h6>Harga : Rp. " + resultSet.getObject(4) + "</h6>");
                                         out.print("</div>");
                                         out.print("<div class='card-action'>");
-                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
+                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn light-blue lighten-1' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
                                         out.print("</div>");
                                         out.print("<div class='card-reveal'>");
                                         out.print("<span class='card-title grey-text text-darken-4'>" + resultSet.getObject(2) + "<i class='material-icons right'>close</i></span>");
@@ -183,7 +183,7 @@
                                         out.print("<h6>Harga : Rp. " + resultSet.getObject(4) + "</h6>");
                                         out.print("</div>");
                                         out.print("<div class='card-action'>");
-                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
+                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn light-blue lighten-1' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
                                         out.print("</div>");
                                         out.print("<div class='card-reveal'>");
                                         out.print("<span class='card-title grey-text text-darken-4'>" + resultSet.getObject(2) + "<i class='material-icons right'>close</i></span>");
@@ -247,7 +247,7 @@
                                 <input type="hidden" name="itemCount" id="itemCount" value="0"></input>
                                 <input type="hidden" name="userid" value="<%= session.getAttribute("user_id")%>"> 
                                 <div class="right-align">
-                                    <input id="submitOrder" class="btn btn-primary teal lighten-2" type="submit">
+                                    <input id="submitOrder" class="btn btn-primary light-blue lighten-1" type="submit">
                                 </div>
                             </div>
                         </form>

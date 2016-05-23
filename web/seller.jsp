@@ -166,7 +166,7 @@
                                                 </p>
                                             </div>
                                             <div class="card-action">
-                                                <input class="waves-effect waves-light btn teal lighten-2" type="submit" value="Mulai Masak">
+                                                <input class="waves-effect waves-light btn light-blue lighten-1" type="submit" value="Mulai Masak">
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +225,7 @@
                                                 </p>
                                             </div>
                                             <div class="card-action">
-                                                <input class="waves-effect waves-light btn teal lighten-2" type="submit" value="Selesai Masak">
+                                                <input class="waves-effect waves-light btn light-blue lighten-1" type="submit" value="Selesai Masak">
                                             </div>
                                         </div>
                                     </div>
