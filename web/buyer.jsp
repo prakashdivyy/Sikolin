@@ -32,6 +32,24 @@
                     <img src="assets/img/textsikolin.png"  height="48"/>
                 </a>
                 <ul class="right hide-on-med-and-down">
+                    <%
+                        Class.forName("com.mysql.jdbc.Driver");
+                        String userName = "root";
+                        String password = "root";
+                        String url = "jdbc:mysql://localhost/sikolin";
+                        Connection connection = DriverManager.getConnection(url, userName, password);
+                        Statement statement = connection.createStatement();
+                        String id_user = session.getAttribute("user_id").toString();
+                        String qu = "SELECT email from user WHERE id='" + id_user + "'";
+                        ResultSet re = statement.executeQuery(qu);
+                        re.next();
+                        String email = re.getObject(1).toString();
+                        if (email != null) {
+                    %>
+                    <li><a href="http://mahasiswa.cs.ui.ac.id/~wiratmika/kantongmahasiswa.html">Connect KaMa</a></li>
+                        <% } else { %>
+                    <li><% out.print(email); %></li>
+                        <% } %>
                     <li><a href="statuspesanan.jsp"> Cek pesanan </a></li>
                     <li><a href="logout.jsp">Logout</a></li>
                 </ul>
@@ -57,15 +75,8 @@
                             <div class="row">
                                 <%
                                     String query = "SELECT  menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id WHERE jenis='0'";
-                                    Class.forName("com.mysql.jdbc.Driver");
-                                    String userName = "root";
-                                    String password = "root";
-                                    String url = "jdbc:mysql://localhost/sikolin";
-                                    Connection connection = DriverManager.getConnection(url, userName, password);
-                                    Statement statement = connection.createStatement();
                                     ResultSet resultSet = statement.executeQuery(query);
                                     ResultSetMetaData metaData = resultSet.getMetaData();
-
                                     while (resultSet.next()) {
                                         Blob image = resultSet.getBlob("foto");
                                         byte[] imgData = image.getBytes(1, (int) image.length());
@@ -112,7 +123,7 @@
                         </div>
                         <div id="minuman" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
-                                <%  
+                                <%
                                     query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='1'";
                                     resultSet = statement.executeQuery(query);
                                     metaData = resultSet.getMetaData();
