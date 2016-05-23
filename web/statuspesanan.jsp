@@ -36,10 +36,10 @@
         </nav>
 
         <div class="row">
-            <div class="col s8 offset-s2">
+            <div class="col s10 offset-s1">
                 <div class="card">
                     <div class="card-content">
-                        <span class="card-title center-align"> <strong>Status Pesanan </strong></span>
+                        <span class="card-title center-align"> <strong>Status Pesanan</strong></span>
                         <%
                             String userid = session.getAttribute("user_id").toString();
                             String query = "SELECT M.id, P.id_form, P.jumlah, P.keterangan, P.status, M.nama, M.foto, U.username from pesanan P inner join menu M on P.id_menu = M.id inner join user U on M.id_seller = U.id, form F where P.id_form = F.id and F.id_user=" + userid + " ORDER BY P.status ASC";
@@ -62,28 +62,26 @@
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col s2">
-                                        <img src="<%= img %>" width="200px" height="200px">
+                                        <img src="<% out.print(img); %>" style="height:200px; width:200px;">
                                     </div>
-                                    <div class="col s7 offset-s1">
+                                    <div class="col s6 offset-s1">
                                         <h5> <%= resultSet.getString("nama")%> </h5>
-                                        <table class="responsive-table highlight">
-                                            <thead>
-                                                <tr>
-                                                    <th>Penjual</th>
-                                                    <th>Jumlah</th>
-                                                    <th>Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><%= resultSet.getString("username")%></td>
-                                                    <td><%= resultSet.getInt("jumlah")%></td>
-                                                    <td><%= resultSet.getString("keterangan")%></td>
-                                                </tr>
-                                            </tbody>
+                                        <table class="table">
+                                            <tr>
+                                                <th>Penjual</th>
+                                                <td><%= resultSet.getString("username")%></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Jumlah</th>
+                                                <td><%= resultSet.getInt("jumlah")%></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Keterangan</th>
+                                                <td><%= resultSet.getString("keterangan")%></td>
+                                            </tr>
                                         </table>
                                     </div>
-                                    <div class="col s2 center-align">
+                                    <div class="col s3 center-align">
                                         <h5> Status </h5>
                                         <%
 
