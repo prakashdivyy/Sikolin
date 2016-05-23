@@ -38,6 +38,11 @@ nav .brand-logo {
     opacity: 0.4;
 }
 
-.modal{
-    width: 40% !important
+
+.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
 }
+.navbar-brand {float:none;}
