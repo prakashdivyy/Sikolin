@@ -55,7 +55,7 @@
                     json.put("status", true);
                 } else {
                     json.put("status", false);
-                    json.put("error_msg", "Invalid Token");
+                    json.put("error_msg", "Insufficient Credit");
                 }
             } else {
                 json.put("status", false);
