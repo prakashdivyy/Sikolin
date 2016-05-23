@@ -48,7 +48,6 @@ List of API that Sikolin provide
 
         username=tester&authkey=30dc08cd0ecce4fdc0706053a274b31a
 
-    
 + Response 200 (application/json)
         
         {
@@ -65,6 +64,20 @@ List of API that Sikolin provide
                         "deskripsi":"Nasi goreng kecap."
                     }
                 ],
+            "status":true
+        }
+        
+## Request Menu [/requestmenu.jsp]
+
+### Request menu from Android [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        username=tester&authkey=30dc08cd0ecce4fdc0706053a274b31a&id_menu=1&jumlah=1&keterangan=Pedas
+
++ Response 200 (application/json)
+        
+        {
             "status":true
         }
 
