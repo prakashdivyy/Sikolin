@@ -25,12 +25,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
         <script src="assets/js/homepage.js"></script>
-        <!--        <ul id="dropdown1" class="dropdown-content">
-                    <li><a href="#!">one</a></li>
-                    <li><a href="#!">two</a></li>
-                    <li class="divider"></li>
-                    <li><a href="logout.jsp">Logout</a></li>
-                </ul>-->
         <nav>
             <div class="nav-wrapper teal lighten-2 z-depth-2 ">
                 <a href="index.jsp" class="brand-logo">
@@ -70,184 +64,150 @@
                                     Connection connection = DriverManager.getConnection(url, userName, password);
                                     Statement statement = connection.createStatement();
                                     ResultSet resultSet = statement.executeQuery(query);
-
-                                    // process to show table
                                     ResultSetMetaData metaData = resultSet.getMetaData();
 
                                     while (resultSet.next()) {
                                         Blob image = resultSet.getBlob("foto");
                                         byte[] imgData = image.getBytes(1, (int) image.length());
                                         String foto_menu = Util.encode(imgData);
-
+                                        String img = "data:image/jpeg;base64," + foto_menu;
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
+                                        out.print("<div class='card-image'>");
+                                        out.print("<img src='" + img + "' class='activator' width='250px' height='250px'>");
+                                        out.print("<span class='card-title activator'>" + resultSet.getObject(2) + "</span>");
+                                        out.print("</div>");
                                         out.print("<div class='card-content'>");
-                                        out.print("<div class='row'>");
-                                        out.print("<div class='col s3'>");
-
-                                        String img = "data:image/jpeg;base64," + foto_menu;
-                                        out.print("<img src='" + img + "' width='125' height='125'>");
+                                        out.print("<h6>Harga : Rp. " + resultSet.getObject(4) + "</h6>");
                                         out.print("</div>");
-                                        out.print("<div class='col s6'>");
-                                        out.print("<h4>" + resultSet.getObject(2) + "</h4>");
-
-                                        out.print("<h5>Harga: Rp. " + resultSet.getObject(4) + "</h5>");
-                                        //Modal for each detail
-                                        out.print("<a color='blue' class='modal-trigger' href='#modal" + resultSet.getObject(1) + "'>Detail</a>");
-                                        out.print("<div id='modal" + resultSet.getObject(1) + "' class='modal'>");
-                                        out.print("<div class='modal-content'>");
-
-                                        out.print("<div class='row'>");
-                                        out.print("<div class='col s3'>");
-                                        out.print("<img src='" + img + "' width='200' height='200'>");
+                                        out.print("<div class='card-action'>");
+                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
                                         out.print("</div>");
-                                        out.print("<div class='col s8 offset-s1'>");
-                                        out.print("<h4> " + resultSet.getObject(2) + " </h4>");
-                                        out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
-                                        out.print("<h5> Rating: " + resultSet.getFloat("total_rating") + "/10 </h5>");
-                                        out.print("</div>");
-                                        out.print("</div>");
-                                        out.print("<h4> Deskripsi </h3>");
-                                        out.print("<h5> " + resultSet.getObject(6) + " </h5> ");
-                                        out.print("</div>");
-                                        out.print("<div class='modal-footer'>");
-                                        out.print("<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>");
-                                        out.print("</div></div><br/>");
-                                        out.print("</div>");
-                                        out.print("<div class='col s1'><br/><br/><br/>");
-
-                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
-
+                                        out.print("<div class='card-reveal'>");
+                                        out.print("<span class='card-title grey-text text-darken-4'>" + resultSet.getObject(2) + "<i class='material-icons right'>close</i></span>");
+                                        out.print("<table>");
+                                        out.print("<tr>");
+                                        out.print("<th>Penjual</th>");
+                                        out.print("<td>" + resultSet.getObject(8) + "</td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<th>Rating</th>");
+                                        out.print("<td>" + resultSet.getFloat("total_rating") + "/10</td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<th>Deskripsi</th>");
+                                        out.print("<td></td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<td><p>" + resultSet.getObject(6) + "</p></td>");
+                                        out.print("<td></td>");
+                                        out.print("</tr>");
+                                        out.print("</table>");
                                         out.print("</div>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("</div>");
-                                        out.print("</div>");
-
                                     }
-
                                 %>
                             </div>
                         </div>
                         <div id="minuman" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
-                                <%                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='1'";
+                                <%  
+                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='1'";
                                     resultSet = statement.executeQuery(query);
-
-                                    // process to show table
                                     metaData = resultSet.getMetaData();
 
                                     while (resultSet.next()) {
                                         Blob image = resultSet.getBlob("foto");
                                         byte[] imgData = image.getBytes(1, (int) image.length());
                                         String foto_menu = Util.encode(imgData);
+                                        String img = "data:image/jpeg;base64," + foto_menu;
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
+                                        out.print("<div class='card-image'>");
+                                        out.print("<img src='" + img + "' class='activator' width='250px' height='250px'>");
+                                        out.print("<span class='card-title activator'>" + resultSet.getObject(2) + "</span>");
+                                        out.print("</div>");
                                         out.print("<div class='card-content'>");
-                                        out.print("<div class='row'>");
-                                        out.print("<div class='col s3'>");
-
-                                        String img = "data:image/jpeg;base64," + foto_menu;
-                                        out.print("<img src='" + img + "' width='125' height='125'>");
+                                        out.print("<h6>Harga : Rp. " + resultSet.getObject(4) + "</h6>");
                                         out.print("</div>");
-                                        out.print("<div class='col s6'>");
-                                        out.print("<h4>" + resultSet.getObject(2) + "</h4>");
-
-                                        out.print("<h5>Harga: Rp. " + resultSet.getObject(4) + "</h5>");
-                                        //Modal for each detail
-                                        out.print("<a color='blue' class='modal-trigger' href='#modal" + resultSet.getObject(1) + "'>Detail</a>");
-                                        out.print("<div id='modal" + resultSet.getObject(1) + "' class='modal'>");
-                                        out.print("<div class='modal-content'>");
-
-                                        out.print("<div class='row'>");
-                                        out.print("<div class='col s3'>");
-                                        out.print("<img src='" + img + "' width='200' height='200'>");
+                                        out.print("<div class='card-action'>");
+                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
                                         out.print("</div>");
-                                        out.print("<div class='col s8 offset-s1'>");
-                                        out.print("<h4> " + resultSet.getObject(2) + " </h4>");
-                                        out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
-                                        out.print("<h5> Rating: " + resultSet.getFloat("total_rating") + "/10 </h5>");
-                                        out.print("</div>");
-                                        out.print("</div>");
-                                        out.print("<h4> Deskripsi </h3>");
-                                        out.print("<h5> " + resultSet.getObject(6) + " </h5> ");
-                                        out.print("</div>");
-                                        out.print("<div class='modal-footer'>");
-                                        out.print("<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>");
-                                        out.print("</div></div><br/>");
-                                        out.print("</div>");
-                                        out.print("<div class='col s1'><br/><br/><br/>");
-
-                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
-
+                                        out.print("<div class='card-reveal'>");
+                                        out.print("<span class='card-title grey-text text-darken-4'>" + resultSet.getObject(2) + "<i class='material-icons right'>close</i></span>");
+                                        out.print("<table>");
+                                        out.print("<tr>");
+                                        out.print("<th>Penjual</th>");
+                                        out.print("<td>" + resultSet.getObject(8) + "</td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<th>Rating</th>");
+                                        out.print("<td>" + resultSet.getFloat("total_rating") + "/10</td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<th>Deskripsi</th>");
+                                        out.print("<td></td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<td><p>" + resultSet.getObject(6) + "</p></td>");
+                                        out.print("<td></td>");
+                                        out.print("</tr>");
+                                        out.print("</table>");
                                         out.print("</div>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("</div>");
-                                        out.print("</div>");
-
                                     }
-
                                 %>
                             </div>
                         </div>
                         <div id="snack" style="overflow-y: scroll; height:70vh;">
                             <div class="row">
-                                <%                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='2'";
+                                <%
+                                    query = "SELECT menu.id, nama, jenis, harga, foto, deskripsi, id_seller, username, menu.total_rating FROM menu INNER JOIN user ON menu.id_seller = user.id  WHERE jenis='2'";
                                     resultSet = statement.executeQuery(query);
-
-                                    // process to show table
                                     metaData = resultSet.getMetaData();
 
                                     while (resultSet.next()) {
                                         Blob image = resultSet.getBlob("foto");
                                         byte[] imgData = image.getBytes(1, (int) image.length());
                                         String foto_menu = Util.encode(imgData);
+                                        String img = "data:image/jpeg;base64," + foto_menu;
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
+                                        out.print("<div class='card-image'>");
+                                        out.print("<img src='" + img + "' class='activator' width='250px' height='250px'>");
+                                        out.print("<span class='card-title activator'>" + resultSet.getObject(2) + "</span>");
+                                        out.print("</div>");
                                         out.print("<div class='card-content'>");
-                                        out.print("<div class='row'>");
-                                        out.print("<div class='col s3'>");
-
-                                        String img = "data:image/jpeg;base64," + foto_menu;
-                                        out.print("<img src='" + img + "' width='125' height='125'>");
+                                        out.print("<h6>Harga : Rp. " + resultSet.getObject(4) + "</h6>");
                                         out.print("</div>");
-                                        out.print("<div class='col s6'>");
-                                        out.print("<h4>" + resultSet.getObject(2) + "</h4>");
-
-                                        out.print("<h5>Harga: Rp. " + resultSet.getObject(4) + "</h5>");
-                                        //Modal for each detail
-                                        out.print("<a color='blue' class='modal-trigger' href='#modal" + resultSet.getObject(1) + "'>Detail</a>");
-                                        out.print("<div id='modal" + resultSet.getObject(1) + "' class='modal'>");
-                                        out.print("<div class='modal-content'>");
-
-                                        out.print("<div class='row'>");
-                                        out.print("<div class='col s3'>");
-                                        out.print("<img src='" + img + "' width='200' height='200'>");
+                                        out.print("<div class='card-action'>");
+                                        out.print("<button id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ", \"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
                                         out.print("</div>");
-                                        out.print("<div class='col s8 offset-s1'>");
-                                        out.print("<h4> " + resultSet.getObject(2) + " </h4>");
-                                        out.print("<h5> Penjual: " + resultSet.getObject(8) + " </h5>");
-                                        out.print("<h5> Rating: " + resultSet.getFloat("total_rating") + "/10 </h5>");
-                                        out.print("</div>");
-                                        out.print("</div>");
-                                        out.print("<h4> Deskripsi </h3>");
-                                        out.print("<h5> " + resultSet.getObject(6) + " </h5> ");
-                                        out.print("</div>");
-                                        out.print("<div class='modal-footer'>");
-                                        out.print("<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>");
-                                        out.print("</div></div><br/>");
-                                        out.print("</div>");
-                                        out.print("<div class='col s1'><br/><br/><br/>");
-
-                                        out.print("<button  id='button" + resultSet.getObject(1) + "' class='waves-effect waves-light btn teal lighten-2' onclick='addToCart(" + resultSet.getObject(1) + ",\"" + resultSet.getObject(2) + "\", \"" + Integer.parseInt(resultSet.getString(4)) + "\")'><i class='material-icons'>add_shopping_cart</i></button>");
-
+                                        out.print("<div class='card-reveal'>");
+                                        out.print("<span class='card-title grey-text text-darken-4'>" + resultSet.getObject(2) + "<i class='material-icons right'>close</i></span>");
+                                        out.print("<table>");
+                                        out.print("<tr>");
+                                        out.print("<th>Penjual</th>");
+                                        out.print("<td>" + resultSet.getObject(8) + "</td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<th>Rating</th>");
+                                        out.print("<td>" + resultSet.getFloat("total_rating") + "/10</td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<th>Deskripsi</th>");
+                                        out.print("<td></td>");
+                                        out.print("</tr>");
+                                        out.print("<tr>");
+                                        out.print("<td><p>" + resultSet.getObject(6) + "</p></td>");
+                                        out.print("<td></td>");
+                                        out.print("</tr>");
+                                        out.print("</table>");
                                         out.print("</div>");
                                         out.print("</div>");
                                         out.print("</div>");
-                                        out.print("</div>");
-                                        out.print("</div>");
-
                                     }
                                     query = "SELECT credits FROM user where id='" + session.getAttribute("user_id") + "'";
                                     resultSet = statement.executeQuery(query);
