@@ -25,12 +25,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
         <script src="assets/js/homepage.js"></script>
-        <!--        <ul id="dropdown1" class="dropdown-content">
-                    <li><a href="#!">one</a></li>
-                    <li><a href="#!">two</a></li>
-                    <li class="divider"></li>
-                    <li><a href="logout.jsp">Logout</a></li>
-                </ul>-->
         <nav>
             <div class="nav-wrapper teal lighten-2 z-depth-2 ">
                 <a href="index.jsp" class="brand-logo">

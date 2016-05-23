@@ -17,7 +17,7 @@
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     </head>
-    <body class="teal lighten-2">
+    <body class="light-blue lighten-1">
         <div class="container">
             <div class="row valign-wrapper">
                 <div class="col s6 offset-s3 valign">
