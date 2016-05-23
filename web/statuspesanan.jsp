@@ -23,7 +23,7 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="assets/js/materialize.min.js"></script>
         <nav>
-            <div class="nav-wrapper teal lighten-1 z-depth-2 ">
+            <div class="nav-wrapper light-blue lighten-1 z-depth-2 ">
                 <a href="index.jsp" class="brand-logo">
                     <img src="assets/img/logosikolin.png" height="64"/>
                     <img src="assets/img/textsikolin.png"  height="48"/>
@@ -127,7 +127,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <input type="submit" class="btn btn-primary" value="Submit Rating">
+                                            <input type="submit" class="btn btn-primary light-blue lighten-1" value="Submit Rating">
                                         </form>
                                         <%
                                                 break;
