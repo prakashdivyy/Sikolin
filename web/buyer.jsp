@@ -74,7 +74,7 @@
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
                                         out.print("<div class='card-image'>");
-                                        out.print("<img src='" + img + "' class='activator' width='250px' height='250px'>");
+                                        out.print("<img src='" + img + "' class='activator' style='height:200px; width:200px;'>");
                                         out.print("<span class='card-title activator'>" + resultSet.getObject(2) + "</span>");
                                         out.print("</div>");
                                         out.print("<div class='card-content'>");
@@ -125,7 +125,7 @@
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
                                         out.print("<div class='card-image'>");
-                                        out.print("<img src='" + img + "' class='activator' width='250px' height='250px'>");
+                                        out.print("<img src='" + img + "' class='activator' style='height:200px; width:200px;'>");
                                         out.print("<span class='card-title activator'>" + resultSet.getObject(2) + "</span>");
                                         out.print("</div>");
                                         out.print("<div class='card-content'>");
@@ -176,7 +176,7 @@
                                         out.print("<div class='col s6'>");
                                         out.print("<div class='card'>");
                                         out.print("<div class='card-image'>");
-                                        out.print("<img src='" + img + "' class='activator' width='250px' height='250px'>");
+                                        out.print("<img src='" + img + "' class='activator' style='height:200px; width:200px;'>");
                                         out.print("<span class='card-title activator'>" + resultSet.getObject(2) + "</span>");
                                         out.print("</div>");
                                         out.print("<div class='card-content'>");
