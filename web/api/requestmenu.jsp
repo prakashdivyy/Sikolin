@@ -45,9 +45,9 @@
                 int harga = result3.getInt("harga");
                 int credit = resultSet.getInt("credits") - (Integer.parseInt(jumlah) * harga);
                 if (credit > 0) {
-                    String query2 = "INSERT INTO form  values (" + new_id + "," + id + ", NOW())";
+                    String query2 = "INSERT INTO form values (" + new_id + "," + id + ", NOW())";
                     statement2.addBatch(query2);
-                    String tempQuery = "INSERT INTO pesanan values (0," + id + "," + new_id + "," + jumlah + ",'" + keterangan + "',0)";
+                    String tempQuery = "INSERT INTO pesanan values (0," + id_menu + "," + new_id + "," + jumlah + ",'" + keterangan + "',0)";
                     statement2.addBatch(tempQuery);
                     statement2.executeBatch();
                     query = "UPDATE user SET credits='" + credit + "' where id='" + id + "'";
